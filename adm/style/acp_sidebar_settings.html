@@ -1,0 +1,74 @@
+<!-- INCLUDE overall_header.html -->
+
+<a id="maincontent"></a>
+
+<h1>{L_ACP_VINNY_SIDEBAR} - {L_ACP_VINNY_SIDEBAR_SETTINGS}</h1>
+
+<p>{L_VINNY_SIDEBAR_EXPLAIN}</p>
+
+<form id="acp_vinny_sidebar" method="post" action="{U_ACTION}">
+
+	<fieldset>
+		<legend>{L_ACP_VINNY_SIDEBAR_SETTINGS}</legend>
+
+		<dl>
+			<dt><label for="vinny_sidebar_enable">{L_VINNY_SIDEBAR_ENABLE}{L_COLON}</label><br /><span>{L_VINNY_SIDEBAR_ENABLE_EXPLAIN}</span></dt>
+			<dd>
+				<label><input type="radio" class="radio" name="vinny_sidebar_enable" value="1"<!-- IF VINNY_SIDEBAR_ENABLE --> id="vinny_sidebar_enable" checked="checked"<!-- ENDIF --> /> {L_YES}</label>
+				<label><input type="radio" class="radio" name="vinny_sidebar_enable" value="0"<!-- IF not VINNY_SIDEBAR_ENABLE --> id="vinny_sidebar_enable" checked="checked"<!-- ENDIF --> /> {L_NO}</label>
+			</dd>
+		</dl>
+
+		<dl>
+			<dt><label for="vinny_sidebar_left_enable">{L_VINNY_SIDEBAR_LEFT_ENABLE}{L_COLON}</label></dt>
+			<dd>
+				<label><input type="radio" class="radio" name="vinny_sidebar_left_enable" value="1"<!-- IF VINNY_SIDEBAR_LEFT_ENABLE --> id="vinny_sidebar_left_enable" checked="checked"<!-- ENDIF --> /> {L_YES}</label>
+				<label><input type="radio" class="radio" name="vinny_sidebar_left_enable" value="0"<!-- IF not VINNY_SIDEBAR_LEFT_ENABLE --> id="vinny_sidebar_left_enable" checked="checked"<!-- ENDIF --> /> {L_NO}</label>
+			</dd>
+		</dl>
+
+
+		<dl>
+			<dt><label for="vinny_sidebar_right_enable">{L_VINNY_SIDEBAR_RIGHT_ENABLE}{L_COLON}</label></dt>
+			<dd>
+				<label><input type="radio" class="radio" name="vinny_sidebar_right_enable" value="1"<!-- IF VINNY_SIDEBAR_RIGHT_ENABLE --> id="vinny_sidebar_right_enable" checked="checked"<!-- ENDIF --> /> {L_YES}</label>
+				<label><input type="radio" class="radio" name="vinny_sidebar_right_enable" value="0"<!-- IF not VINNY_SIDEBAR_RIGHT_ENABLE --> id="vinny_sidebar_right_enable" checked="checked"<!-- ENDIF --> /> {L_NO}</label>
+			</dd>
+		</dl>
+
+		<dl>
+			<dt><label for="vinny_sidebar_hide_toggles">{L_VINNY_SIDEBAR_HIDE_TOGGLES}{L_COLON}</label><br /><span>{L_VINNY_SIDEBAR_HIDE_TOGGLES_EXPLAIN}</span></dt>
+			<dd>
+				<label><input type="radio" class="radio" name="vinny_sidebar_hide_toggles" value="1"<!-- IF VINNY_SIDEBAR_HIDE_TOGGLES --> id="vinny_sidebar_hide_toggles" checked="checked"<!-- ENDIF --> /> {L_YES}</label>
+				<label><input type="radio" class="radio" name="vinny_sidebar_hide_toggles" value="0"<!-- IF not VINNY_SIDEBAR_HIDE_TOGGLES --> id="vinny_sidebar_hide_toggles" checked="checked"<!-- ENDIF --> /> {L_NO}</label>
+			</dd>
+		</dl>
+
+		<dl>
+			<dt><label for="vinny_sidebar_exclude_pages">{L_BLOCK_EXCLUDE_PAGES}{L_COLON}</label><br /><span>{L_BLOCK_EXCLUDE_PAGES_EXPLAIN}</span></dt>
+			<dd>
+				<select id="vinny_sidebar_exclude_pages" name="vinny_sidebar_exclude_pages[]" multiple="multiple" size="10" style="min-width: 250px;">
+					{S_EXCLUDE_PAGES_OPTIONS}
+				</select>
+			</dd>
+		</dl>
+
+		<dl>
+			<dt><label for="vinny_sidebar_clock_format">{L_VINNY_SIDEBAR_CLOCK_FORMAT}{L_COLON}</label><br /><span>{L_VINNY_SIDEBAR_CLOCK_FORMAT_EXPLAIN}</span></dt>
+			<dd>
+				<label><input type="radio" class="radio" name="vinny_sidebar_clock_format" value="24"<!-- IF VINNY_SIDEBAR_CLOCK_FORMAT == '24' --> id="vinny_sidebar_clock_format" checked="checked"<!-- ENDIF --> /> {L_VINNY_SIDEBAR_CLOCK_24H}</label>
+				<label><input type="radio" class="radio" name="vinny_sidebar_clock_format" value="12"<!-- IF VINNY_SIDEBAR_CLOCK_FORMAT == '12' --> id="vinny_sidebar_clock_format" checked="checked"<!-- ENDIF --> /> {L_VINNY_SIDEBAR_CLOCK_AMPM}</label>
+			</dd>
+		</dl>
+
+
+	</fieldset>
+
+	<fieldset class="submit-buttons">
+		<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+		<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+		{S_FORM_TOKEN}
+	</fieldset>
+</form>
+
+<!-- INCLUDE overall_footer.html -->

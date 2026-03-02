@@ -1,0 +1,324 @@
+.vinny-sidebar-container {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: flex-start;
+	padding: 0 15px;
+	box-sizing: border-box;
+	max-width: 100%;
+	margin: 0 auto;
+}
+
+.vinny-sidebar {
+	flex: 0 0 200px;
+	max-width: 200px;
+	margin-top: 15px;
+	position: relative;
+	transition: flex 0.3s ease, margin 0.3s ease;
+}
+
+.vinny-sidebar-inner {
+	transition: opacity 0.3s ease;
+	width: 200px;
+	max-width: 100vw;
+}
+
+.vinny-sidebar-hidden {
+	flex: 0 0 0px !important;
+	overflow: visible !important;
+	margin: 15px 0 0 0 !important; /* Keep top margin, drop side margins */
+}
+
+.vinny-sidebar-hidden .vinny-sidebar-inner {
+	opacity: 0;
+	pointer-events: none;
+	display: none;
+}
+
+.vinny-sidebar-toggle {
+	position: absolute;
+	top: 15px;
+	width: 30px;
+	height: 30px;
+	background-color: #12a3eb;
+	color: #fff;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 20;
+	transition: background-color 0.2s ease, transform 0.2s ease;
+	border-radius: 50%;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.vinny-sidebar-toggle:hover {
+	background-color: #0076b1;
+	transform: scale(1.1);
+}
+
+.vinny-sidebar-left {
+	margin-right: 15px;
+}
+
+.vinny-sidebar-left .vinny-sidebar-toggle {
+	right: -15px;
+}
+
+.vinny-sidebar-right {
+	margin-left: 15px;
+}
+
+.vinny-sidebar-right .vinny-sidebar-toggle {
+	left: -15px;
+}
+
+.vinny-sidebar-content {
+	display: contents;
+}
+
+/* Fix for standard phpBB wrap container being inside flex */
+.vinny-sidebar-content .wrap {
+	flex: 1 1 auto;
+	min-width: 0;
+	width: 100%;
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+}
+
+@media (max-width: 850px) {
+	.vinny-sidebar-container {
+		display: block;
+		padding: 0;
+	}
+	.vinny-sidebar {
+		display: none !important; /* Hide sidebars completely on mobile/tablets */
+	}
+	.vinny-sidebar-content .wrap {
+		margin-left: auto !important;
+		margin-right: auto !important;
+	}
+}
+
+.vinny-sidebar-block {
+	margin-bottom: 20px;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+	background: #f9f9f9;
+	border: 1px solid #ced4da;
+}
+
+.vinny-sidebar-block-header {
+	background: #12a3eb; /* Prosilver blue primary */
+	background: linear-gradient(135deg, #12a3eb 0%, #0076b1 100%);
+	color: #ffffff;
+	padding: 10px 15px;
+	font-size: 1.1em;
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	border-bottom: 2px solid rgba(0,0,0,0.1);
+	text-align: center;
+}
+
+.vinny-sidebar-block-content {
+	padding: 10px;
+	color: #333;
+	font-size: 11px;
+	line-height: 1.1;
+}
+
+/* Specific item styling for lists */
+.vinny-sidebar-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.vinny-sidebar-list-item {
+	padding: 8px 0;
+	border-bottom: 1px solid #eef0f2;
+}
+
+.vinny-sidebar-list-item:last-child {
+	border-bottom: none;
+}
+
+.vinny-sidebar-list-link {
+	font-weight: 600;
+	color: #105289;
+	display: block;
+	margin-bottom: 3px;
+	text-decoration: none;
+}
+
+.vinny-sidebar-list-link:hover {
+	color: #d31141;
+}
+
+.vinny-sidebar-list-meta {
+	font-size: 11px;
+	color: #6c757d;
+	display: block;
+}
+
+/* Avatar styling */
+.sidebar-avatar img {
+	border-radius: 50%;
+	border: 3px solid #fff;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.sidebar-greeting {
+	margin-top: 5px;
+	font-weight: 500;
+}
+
+/* Clock styling */
+.vinny-sidebar-clock-container {
+	text-align: center;
+	padding: 15px 0;
+}
+
+.vinny-sidebar-clock-display {
+	font-family: 'Courier New', Courier, monospace;
+	font-size: 25px;
+	font-weight: bold;
+	color: #333;
+	letter-spacing: 2px;
+	text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+	display: inline-block;
+	background: #f9f9f9;
+	padding: 10px 20px;
+	border-radius: 8px;
+	border: 1px solid #e0e0e0;
+	box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.vinny-sidebar-clock-ampm {
+	font-size: 14px;
+	margin-left: 5px;
+	color: #777;
+	font-weight: normal;
+	vertical-align: middle;
+	display: none;
+}
+
+/* Sidebar Calendar Style */
+#vinny-sidebar-calendar {
+	margin: 0 auto;
+	width: 100%;
+}
+#vinny_calendar_weekdays div {
+	display: inline-block;
+	vertical-align: top;
+}
+#vinny_calendar_content, #vinny_calendar_weekdays, #vinny_calendar_header {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+	float: left;
+	z-index: 10;
+}
+#vinny_calendar_weekdays div, #vinny_calendar_content div {
+	width: 14.2857%;
+	height: 38px;
+	line-height: 38px;
+	overflow: hidden;
+	text-align: center;
+	background-color: #FFFFFF;
+	color: #787878;
+	font-size: 10px;
+	font-weight: 500;
+	box-sizing: border-box;
+}
+#vinny_calendar_content {
+	border-radius: 0px 0px 5px 5px;
+	padding-bottom: 5px;
+}
+#vinny_calendar_content div {
+	float: left;
+}
+#vinny_calendar_content div:hover:not(.blank) {
+	background-color: #F8F8F8;
+	cursor: pointer;
+}
+#vinny_calendar_content div.blank {
+	background-color: #ffffff;
+}
+#vinny_calendar_header, #vinny_calendar_content div.today {
+	zoom: 1;
+	opacity: 0.9;
+}
+#vinny_calendar_content div.today {
+	color: #FFFFFF;
+	font-weight: bold;
+	border-radius: 5px;
+}
+#vinny_calendar_header {
+	width: 100%;
+	height: 40px;
+	text-align: center;
+	background-color: #FF6860;
+	padding: 0;
+	border-radius: 5px 5px 0px 0px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	box-sizing: border-box;
+}
+#vinny_calendar_header h1 {
+	font-size: 13px;
+	color: #FFFFFF;
+	margin: 0;
+	padding: 0;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+#vinny_calendar_header i {
+	color: #FFFFFF;
+	cursor: pointer;
+	padding: 10px 15px;
+	font-size: 14px;
+}
+
+/* Welcome Block */
+.vinny-welcome-container { text-align: center; }
+.vinny-avatar-container { margin-bottom: 12px; }
+.vinny-welcome-back { display: block; color: #555; margin-bottom: 2px; }
+.vinny-welcome-name { font-size: 1.1em; display: block; margin-bottom: 5px; }
+.vinny-welcome-list { margin-top: 15px; text-align: left; }
+.vinny-pm-count { color: #d31141; }
+.vinny-guest-msg { text-align: center; margin-bottom: 15px; color: #555; }
+.vinny-login-fieldset { border: none; padding: 0; margin: 0; font-size: 10px; }
+.vinny-login-input { width: 100%; box-sizing: border-box; margin-bottom: 8px; padding: 8px; }
+.vinny-autologin-label { display: block; font-size: 11px; margin-bottom: 8px; color: #555; }
+.vinny-login-btn { width: 100%; margin-top: 5px; }
+.vinny-register-container { text-align: center; margin-top: 15px; font-size: 12px; }
+.vinny-register-link { text-decoration: none; color: #105289; font-weight: bold; }
+
+/* Statistics Block */
+.vinny-stat-item { display: flex; justify-content: space-between; }
+
+/* Menu Block */
+.vinny-menu-list-no-margin { margin: 0; padding: 0; }
+
+/* Search Block */
+.vinny-search-fieldset { border: none; padding: 0; margin: 0; display: flex; width: 100%; box-sizing: border-box; }
+.vinny-search-input {
+	flex: 1; min-width: 0; box-sizing: border-box; padding: 8px; 
+	border: 1px solid #ced4da; border-right: none; 
+	border-radius: 3px 0 0 3px; font-size: 10px; outline: none; box-shadow: none;
+}
+.vinny-search-btn {
+	padding: 5px 5px; border: 1px solid #ced4da; border-radius: 0 3px 3px 0; 
+	background-color: #f1f1f1; color: #777; cursor: pointer; 
+	display: flex; align-items: center; justify-content: center; outline: none; margin: 0;
+}
+.vinny-search-btn-icon { font-size: 12px; margin: 0; }
+.vinny-search-links { margin-top: 15px; margin-bottom: 0; }
+
+/* Newest Member Block */
+.vinny-newest-container { text-align: center; padding: 10px 5px; font-size: 11px; line-height: 1.5; color: #555; }
+.vinny-newest-name { font-size: 1.15em; display: inline-block; margin-top: 6px; }

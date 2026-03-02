@@ -1,0 +1,85 @@
+<div id="vinny-sidebar-calendar">
+	<div id="vinny_calendar_header">
+		<i class="icon fa fa-chevron-left"></i>
+		<h1></h1>
+		<i class="icon fa fa-chevron-right"></i>
+	</div>
+	<div id="vinny_calendar_weekdays"></div>
+	<div id="vinny_calendar_content"></div>
+</div>
+
+<script>
+// Source: https://codepen.io/B8bop/pen/DOQJyJ
+document.addEventListener('DOMContentLoaded', function() {
+	var $ = jQuery;
+	var t=2013, n=9;
+	var i=["{L_SIDEBAR_CAL_JANUARY}","{L_SIDEBAR_CAL_FEBRUARY}","{L_SIDEBAR_CAL_MARCH}","{L_SIDEBAR_CAL_APRIL}","{L_SIDEBAR_CAL_MAY}","{L_SIDEBAR_CAL_JUNE}","{L_SIDEBAR_CAL_JULY}","{L_SIDEBAR_CAL_AUGUST}","{L_SIDEBAR_CAL_SEPTEMBER}","{L_SIDEBAR_CAL_OCTOBER}","{L_SIDEBAR_CAL_NOVEMBER}","{L_SIDEBAR_CAL_DECEMBER}"];
+	var s=["{L_SIDEBAR_CAL_SUN}","{L_SIDEBAR_CAL_MON}","{L_SIDEBAR_CAL_TUE}","{L_SIDEBAR_CAL_WED}","{L_SIDEBAR_CAL_THU}","{L_SIDEBAR_CAL_FRI}","{L_SIDEBAR_CAL_SAT}"];
+	var o=["#16a085","#1abc9c","#c0392b","#27ae60","#FF6860","#f39c12","#f1c40f","#e67e22","#2ecc71","#e74c3c","#d35400","#2c3e50"];
+	
+	var u=$("#vinny-sidebar-calendar");
+	var a=u.find("#vinny_calendar_header");
+	var f=u.find("#vinny_calendar_weekdays");
+	var l=u.find("#vinny_calendar_content");
+	
+	function b(){
+		var e=new Date();
+		t=e.getFullYear();
+		n=e.getMonth()+1;
+	}
+	
+	function v(yr,mo){return(new Date(yr,mo,0)).getDate()}
+	function m(yr,mo,day){return(new Date(yr,mo-1,day)).getDay()}
+	function g(e){return y(new Date())==y(e)}
+	function y(e){return e.getFullYear()+"/"+(e.getMonth()+1)+"/"+e.getDate()}
+	
+	function p(){
+		f.empty();
+		for(var e=0;e<7;e++){
+			f.append("<div>"+s[e].substring(0,3)+"</div>");
+		}
+	}
+
+	function c(){
+		p();
+		var e = [];
+		for(var r=1;r<v(t,n)+1;r++){
+			e.push({day:r,weekday:s[m(t,n,r)]});
+		}
+		var r_idx=0;
+		var u_flag=false;
+		l.empty();
+		while(!u_flag){
+			if(s[r_idx]==e[0].weekday){
+				u_flag=true;
+			}else{
+				l.append('<div class="blank"></div>');
+				r_idx++;
+			}
+		}
+		for(var c_idx=0;c_idx<42-r_idx;c_idx++){
+			if(c_idx>=e.length){
+				l.append('<div class="blank"></div>');
+			}else{
+				var v_val=e[c_idx].day;
+				var m_val=g(new Date(t,n-1,v_val))?'<div class="today">':'<div>';
+				l.append(m_val+""+v_val+"</div>");
+			}
+		}
+		var y_val=o[n-1];
+		a.css("background-color",y_val).find("h1").text(i[n-1]+" "+t);
+		l.find(".today").css("background-color",y_val).css("color", "#fff");
+	}
+
+	b();
+	c();
+
+	a.find('i').on("click",function(){
+		var e=$(this);
+		var is_left = e.hasClass("fa-chevron-left");
+		n = is_left ? n-1 : n+1;
+		if(n<1){n=12;t--}else if(n>12){n=1;t++}
+		c();
+	});
+});
+</script>

@@ -1,0 +1,37 @@
+<!-- IF S_DISPLAY_SEARCH -->
+<form action="{U_SEARCH}" method="get">
+	<fieldset class="vinny-search-fieldset">
+		<input type="text" name="keywords" placeholder="{L_SEARCH_KEYWORDS}" class="vinny-search-input" />
+		<button type="submit" title="{L_SEARCH}" class="vinny-search-btn">
+			<i class="icon fa-search fa-fw vinny-search-btn-icon" aria-hidden="true"></i>
+		</button>
+	</fieldset>
+</form>
+
+<ul class="vinny-sidebar-list vinny-search-links">
+	<!-- IF S_REGISTERED_USER -->
+		<li class="vinny-sidebar-list-item">
+			<a href="{U_SEARCH_SELF}" class="vinny-sidebar-list-link"><i class="icon fa-file-o fa-fw" aria-hidden="true"></i> {L_SEARCH_SELF}</a>
+		</li>
+	<!-- ENDIF -->
+	<!-- IF S_USER_LOGGED_IN -->
+		<li class="vinny-sidebar-list-item">
+			<a href="{U_SEARCH_NEW}" class="vinny-sidebar-list-link"><i class="icon fa-file-o fa-fw" aria-hidden="true"></i> {L_SEARCH_NEW}</a>
+		</li>
+	<!-- ENDIF -->
+	<!-- IF S_LOAD_UNREADS -->
+		<li class="vinny-sidebar-list-item">
+			<a href="{U_SEARCH_UNREAD}" class="vinny-sidebar-list-link"><i class="icon fa-file-o fa-fw" aria-hidden="true"></i> {L_SEARCH_UNREAD}</a>
+		</li>
+	<!-- ENDIF -->
+	<li class="vinny-sidebar-list-item">
+		<a href="{U_SEARCH_UNANSWERED}" class="vinny-sidebar-list-link"><i class="icon fa-file-o fa-fw" aria-hidden="true"></i> {L_SEARCH_UNANSWERED}</a>
+	</li>
+	<li class="vinny-sidebar-list-item">
+		<a href="{U_SEARCH_ACTIVE_TOPICS}" class="vinny-sidebar-list-link"><i class="icon fa-file-o fa-fw" aria-hidden="true"></i> {L_SEARCH_ACTIVE_TOPICS}</a>
+	</li>
+	<li class="vinny-sidebar-list-item">
+		<a href="{U_SEARCH}" class="vinny-sidebar-list-link"><i class="icon fa-search fa-fw" aria-hidden="true"></i> {L_SEARCH_ADV}</a>
+	</li>
+</ul>
+<!-- ENDIF -->

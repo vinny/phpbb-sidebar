@@ -1,0 +1,73 @@
+<!-- IF S_VINNY_SIDEBAR_LEFT_ENABLED or S_VINNY_SIDEBAR_RIGHT_ENABLED -->
+	</main>
+	<!-- IF S_VINNY_SIDEBAR_RIGHT_ENABLED -->
+	<aside id="vinny-sidebar-right" class="vinny-sidebar vinny-sidebar-right" role="complementary">
+		<!-- IF not S_VINNY_SIDEBAR_HIDE_TOGGLES -->
+		<button class="vinny-sidebar-toggle" data-side="right" type="button" aria-label="{L_SIDEBAR_TOGGLE}" title="{L_SIDEBAR_TOGGLE}">
+			<i class="icon fa fa-chevron-right fa-fw" aria-hidden="true"></i>
+		</button>
+		<!-- ENDIF -->
+		<div class="vinny-sidebar-inner">
+			<!-- INCLUDE @vinny_sidebar/sidebar_right.html -->
+		</div>
+	</aside>
+	<!-- ENDIF -->
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+	var $ = jQuery;
+	function setCookie(cname, cvalue, exdays) {
+		var d = new Date();
+		d.setTime(d.getTime() + (exdays*24*60*60*1000));
+		var expires = "expires="+ d.toUTCString();
+		document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	}
+	function getCookie(cname) {
+		var name = cname + "=";
+		var decodedCookie = decodeURIComponent(document.cookie);
+		var ca = decodedCookie.split(';');
+		for(var i = 0; i <ca.length; i++) {
+			var c = ca[i];
+			while (c.charAt(0) == ' ') { c = c.substring(1); }
+			if (c.indexOf(name) === 0) { return c.substring(name.length, c.length); }
+		}
+		return "";
+	}
+
+	function toggleSidebar(side, isInit) {
+		var sidebar = $('#vinny-sidebar-' + side);
+		var icon = sidebar.children('.vinny-sidebar-toggle').find('i');
+		var isHidden = sidebar.hasClass('vinny-sidebar-hidden');
+
+		if (!isHidden || (isInit && isHidden)) {
+			// Hide
+			sidebar.addClass('vinny-sidebar-hidden');
+			if (side === 'left') {
+				icon.removeClass('fa-chevron-left').addClass('fa-chevron-right');
+			} else {
+				icon.removeClass('fa-chevron-right').addClass('fa-chevron-left');
+			}
+			if (!isInit) setCookie('vinny_sidebar_' + side + '_hidden', '1', 365);
+		} else {
+			// Show
+			sidebar.removeClass('vinny-sidebar-hidden');
+			if (side === 'left') {
+				icon.removeClass('fa-chevron-right').addClass('fa-chevron-left');
+			} else {
+				icon.removeClass('fa-chevron-left').addClass('fa-chevron-right');
+			}
+			if (!isInit) setCookie('vinny_sidebar_' + side + '_hidden', '0', 365);
+		}
+	}
+
+	$('.vinny-sidebar-toggle').on('click', function() {
+		var side = $(this).data('side');
+		toggleSidebar(side, false);
+	});
+
+	// Restore initial state
+	if (getCookie('vinny_sidebar_left_hidden') === '1') { toggleSidebar('left', true); }
+	if (getCookie('vinny_sidebar_right_hidden') === '1') { toggleSidebar('right', true); }
+});
+</script>
+<!-- ENDIF -->

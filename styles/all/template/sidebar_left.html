@@ -1,0 +1,14 @@
+<!-- BEGIN vinny_sidebar_left_blocks -->
+	<div class="vinny-sidebar-block">
+		<div class="vinny-sidebar-block-header">
+			{vinny_sidebar_left_blocks.TITLE}
+		</div>
+		<div class="vinny-sidebar-block-content">
+			<!-- IF vinny_sidebar_left_blocks.TEMPLATE_FILE -->
+				<!-- INCLUDE @vinny_sidebar/{vinny_sidebar_left_blocks.TEMPLATE_FILE} -->
+			<!-- ELSE -->
+				{vinny_sidebar_left_blocks.CONTENT}
+			<!-- ENDIF -->
+		</div>
+	</div>
+<!-- END vinny_sidebar_left_blocks -->
