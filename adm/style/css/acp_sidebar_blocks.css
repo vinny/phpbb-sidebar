@@ -1,0 +1,105 @@
+.vinny-sidebar-preview-frame {
+	background: #eef1f4;
+	border: 1px solid #c8d0d8;
+	border-radius: 4px;
+	padding: 14px;
+	overflow-x: auto;
+}
+
+.vinny-sidebar-preview-layout {
+	display: grid;
+	grid-template-columns: minmax(150px, 200px) minmax(260px, 1fr) minmax(150px, 200px);
+	gap: 12px;
+	min-width: 660px;
+}
+
+.vinny-sidebar-preview-sidebar,
+.vinny-sidebar-preview-content {
+	background: #ffffff;
+	border: 1px solid #d7dde3;
+	border-radius: 4px;
+	box-sizing: border-box;
+	min-height: 260px;
+	padding: 10px;
+}
+
+.vinny-sidebar-preview-sidebar {
+	background: #f9fafb;
+}
+
+.vinny-sidebar-preview-sidebar-active {
+	border-color: #12a3eb;
+	box-shadow: 0 0 0 2px rgba(18, 163, 235, 0.25);
+}
+
+.vinny-sidebar-preview-label {
+	color: #6c757d;
+	font-size: 11px;
+	font-weight: bold;
+	margin-bottom: 8px;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.vinny-sidebar-preview-content {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	justify-content: center;
+}
+
+.vinny-sidebar-preview-placeholder-line {
+	background: #dfe5ea;
+	border-radius: 3px;
+	height: 12px;
+}
+
+.vinny-sidebar-preview-placeholder-line-short {
+	width: 65%;
+}
+
+.vinny-sidebar-preview-placeholder-box {
+	background: #edf1f5;
+	border: 1px dashed #b8c3cc;
+	border-radius: 4px;
+	color: #6c757d;
+	font-size: 12px;
+	padding: 38px 15px;
+	text-align: center;
+}
+
+.vinny-sidebar-preview-block {
+	background: #f9f9f9;
+	border: 1px solid #ced4da;
+	border-radius: 8px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	margin-bottom: 12px;
+	overflow: hidden;
+}
+
+.vinny-sidebar-preview-block-header {
+	background: #12a3eb;
+	background: linear-gradient(135deg, #12a3eb 0%, #0076b1 100%);
+	border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+	color: #ffffff;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 8px 10px;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.vinny-sidebar-preview-block-content {
+	color: #333333;
+	font-size: 11px;
+	line-height: 1.3;
+	padding: 10px;
+}
+
+.vinny-sidebar-preview-empty-block {
+	background: #eef1f4;
+	border: 1px dashed #c5ced6;
+	border-radius: 4px;
+	height: 64px;
+	margin-bottom: 10px;
+}

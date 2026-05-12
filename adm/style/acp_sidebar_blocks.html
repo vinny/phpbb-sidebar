@@ -1,0 +1,248 @@
+<!-- INCLUDE overall_header.html -->
+
+<a id="maincontent"></a>
+
+<h1>{L_ACP_VINNY_SIDEBAR} - {L_ACP_VINNY_SIDEBAR_BLOCKS}</h1>
+
+<p>{L_VINNY_SIDEBAR_EXPLAIN}</p>
+
+<!-- IF S_EDIT_BLOCK -->
+<!-- INCLUDECSS @vinny_sidebar/css/acp_sidebar_blocks.css -->
+	<a href="{U_BACK}" style="float: {S_CONTENT_FLOW_END};">&laquo; {L_BACK}</a>
+
+	<form id="acp_vinny_sidebar" method="post" action="{U_ACTION}">
+
+		<fieldset>
+			<legend>{BLOCK_FORM_TITLE}</legend>
+
+			<p class="warningbox">{L_BLOCK_TRUSTED_HTML_WARNING}</p>
+
+			<dl>
+				<dt><label for="block_name">{L_BLOCK_NAME}{L_COLON}</label></dt>
+				<dd><input type="text" id="block_name" name="block_name" value="{BLOCK_NAME}" maxlength="255" size="40" required="required" /></dd>
+			</dl>
+			<dl>
+				<dt><label for="sidebar_side">{L_BLOCK_SIDE}{L_COLON}</label></dt>
+				<dd>
+					<label><input type="radio" class="radio" name="sidebar_side" value="left"<!-- IF SIDEBAR_SIDE == 'left' --> id="sidebar_side" checked="checked"<!-- ENDIF --> /> {L_BLOCK_SIDE_LEFT}</label>
+					<label><input type="radio" class="radio" name="sidebar_side" value="right"<!-- IF SIDEBAR_SIDE == 'right' --> id="sidebar_side" checked="checked"<!-- ENDIF --> /> {L_BLOCK_SIDE_RIGHT}</label>
+				</dd>
+			</dl>
+			<dl>
+				<dt><label for="block_enabled">{L_BLOCK_ENABLED}{L_COLON}</label></dt>
+				<dd>
+					<label><input type="radio" class="radio" name="block_enabled" value="1"<!-- IF BLOCK_ENABLED --> id="block_enabled" checked="checked"<!-- ENDIF --> /> {L_YES}</label>
+					<label><input type="radio" class="radio" name="block_enabled" value="0"<!-- IF not BLOCK_ENABLED --> id="block_enabled" checked="checked"<!-- ENDIF --> /> {L_NO}</label>
+				</dd>
+			</dl>
+			<dl>
+				<dt><label for="block_content">{L_BLOCK_CONTENT}{L_COLON}</label><br /><span>{L_BLOCK_CONTENT_EXPLAIN}</span></dt>
+				<dd><textarea id="block_content" name="block_content" rows="10" cols="60" style="width: 90%;" required="required">{BLOCK_CONTENT}</textarea></dd>
+			</dl>
+		</fieldset>
+
+		<!-- IF S_BLOCK_ANALYSIS -->
+			<fieldset>
+				<legend>{L_BLOCK_ANALYSIS}</legend>
+				<!-- BEGIN analysis_results -->
+					<p class="{analysis_results.CLASS}">{analysis_results.MESSAGE}</p>
+				<!-- END analysis_results -->
+			</fieldset>
+		<!-- ENDIF -->
+
+		<!-- IF S_BLOCK_PREVIEW -->
+			<fieldset>
+				<legend>{L_BLOCK_PREVIEW}</legend>
+				<div class="vinny-sidebar-preview-frame">
+					<div class="vinny-sidebar-preview-layout">
+						<div class="vinny-sidebar-preview-sidebar<!-- IF SIDEBAR_SIDE == 'left' --> vinny-sidebar-preview-sidebar-active<!-- ENDIF -->">
+							<div class="vinny-sidebar-preview-label">{L_BLOCK_SIDE_LEFT}</div>
+							<!-- IF SIDEBAR_SIDE == 'left' -->
+								<div class="vinny-sidebar-preview-block">
+									<div class="vinny-sidebar-preview-block-header">
+										{BLOCK_NAME}
+									</div>
+									<div class="vinny-sidebar-preview-block-content">
+										{BLOCK_PREVIEW}
+									</div>
+								</div>
+							<!-- ELSE -->
+								<div class="vinny-sidebar-preview-empty-block"></div>
+								<div class="vinny-sidebar-preview-empty-block"></div>
+							<!-- ENDIF -->
+						</div>
+
+						<div class="vinny-sidebar-preview-content">
+							<div class="vinny-sidebar-preview-placeholder-box">{L_BLOCK_PREVIEW_CONTENT_PLACEHOLDER}</div>
+							<div class="vinny-sidebar-preview-placeholder-line"></div>
+							<div class="vinny-sidebar-preview-placeholder-line"></div>
+							<div class="vinny-sidebar-preview-placeholder-line vinny-sidebar-preview-placeholder-line-short"></div>
+						</div>
+
+						<div class="vinny-sidebar-preview-sidebar<!-- IF SIDEBAR_SIDE == 'right' --> vinny-sidebar-preview-sidebar-active<!-- ENDIF -->">
+							<div class="vinny-sidebar-preview-label">{L_BLOCK_SIDE_RIGHT}</div>
+							<!-- IF SIDEBAR_SIDE == 'right' -->
+								<div class="vinny-sidebar-preview-block">
+									<div class="vinny-sidebar-preview-block-header">
+										{BLOCK_NAME}
+									</div>
+									<div class="vinny-sidebar-preview-block-content">
+										{BLOCK_PREVIEW}
+									</div>
+								</div>
+							<!-- ELSE -->
+								<div class="vinny-sidebar-preview-empty-block"></div>
+								<div class="vinny-sidebar-preview-empty-block"></div>
+							<!-- ENDIF -->
+						</div>
+					</div>
+				</div>
+			</fieldset>
+		<!-- ENDIF -->
+
+		<fieldset class="submit-buttons">
+			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+			<input class="button2" type="submit" name="analyse" value="{L_BLOCK_ANALYSE_HTML}" />&nbsp;
+			<input class="button2" type="submit" name="preview" value="{L_BLOCK_PREVIEW}" />&nbsp;
+			<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+			{S_FORM_TOKEN}
+		</fieldset>
+
+	</form>
+
+<!-- ELSE -->
+	<form id="acp_sidebar_add" method="post" action="{U_ACTION}">
+		<fieldset class="quick">
+			<input class="button2" type="submit" name="add" value="{L_ACP_VINNY_SIDEBAR_BLOCK_ADD}" />
+			{S_FORM_TOKEN}
+		</fieldset>
+	</form>
+
+	<div style="display: flex; gap: 2%; width: 100%; justify-content: space-between;">
+
+		<div style="width: 49%;">
+			<h2>{L_BLOCK_SIDE_LEFT}</h2>
+			<table class="table1 zebra-table">
+				<thead>
+					<tr>
+						<th>{L_BLOCK_NAME}</th>
+						<th style="text-align: center;">{L_BLOCK_MOVE_TO}</th>
+						<th style="text-align: center;">{L_BLOCK_ENABLED}</th>
+						<th>{L_ACTION}</th>
+					</tr>
+				</thead>
+				<tbody id="sidebar-left-list" class="sortable-list" data-side="left">
+				<!-- BEGIN blocks_left -->
+					<tr data-id="{blocks_left.ID}">
+						<td>
+							<i class="icon fa-arrows fa-fw drag-handle" style="cursor: move; color: #999;" title="{L_BLOCK_DRAG_DROP}"></i> 
+							<strong>{blocks_left.NAME}</strong>
+						</td>
+						<td style="text-align: center;">
+							<a href="{blocks_left.U_TOGGLE_SIDE}" class="move-side-btn" style="text-decoration: none;" title="{L_BLOCK_MOVE_TO} {L_BLOCK_SIDE_RIGHT}">
+								<i class="icon acp-icon fa-arrow-circle-right fa-fw" aria-hidden="true" style="color: #ff9900;"></i>
+							</a>
+						</td>
+						<td style="text-align: center;">
+							<a href="{blocks_left.U_TOGGLE_ENABLED}" data-ajax="sidebar_toggle_enabled" style="text-decoration: none;">
+								<!-- IF blocks_left.ENABLED --><i class="icon acp-icon fa-check-circle fa-fw" style="color: #228822;" aria-hidden="true" title="{L_YES}"></i><!-- ELSE --><i class="icon acp-icon fa-times-circle fa-fw" style="color: #bcbcbc;" aria-hidden="true" title="{L_NO}"></i><!-- ENDIF -->
+							</a>
+						</td>
+						<td class="actions">
+							<!-- IF blocks_left.S_FIRST_ROW -->
+								<span class="move-up-icon" style="opacity: 0.3; pointer-events: none;">{ICON_MOVE_UP}</span>
+							<!-- ELSE -->
+								<span class="move-up-icon"><a href="{blocks_left.U_MOVE_UP}" class="move-up-btn" style="text-decoration: none;">{ICON_MOVE_UP}</a></span>
+							<!-- ENDIF -->
+
+							<!-- IF blocks_left.S_LAST_ROW -->
+								<span class="move-down-icon" style="opacity: 0.3; pointer-events: none;">{ICON_MOVE_DOWN}</span>
+							<!-- ELSE -->
+								<span class="move-down-icon"><a href="{blocks_left.U_MOVE_DOWN}" class="move-down-btn" style="text-decoration: none;">{ICON_MOVE_DOWN}</a></span>
+							<!-- ENDIF -->
+
+							<!-- IF not blocks_left.IS_SYSTEM -->
+							<a href="{blocks_left.U_EDIT}" style="text-decoration: none;">{ICON_EDIT}</a>
+							<a href="{blocks_left.U_DELETE}" data-ajax="row_delete" style="text-decoration: none;">{ICON_DELETE}</a>
+							<!-- ENDIF -->
+						</td>
+					</tr>
+				<!-- BEGINELSE -->
+					<tr class="empty-row">
+						<td colspan="4" class="row3" style="text-align: center;">{L_NO_BLOCKS}</td>
+					</tr>
+				<!-- END blocks_left -->
+				</tbody>
+			</table>
+		</div>
+
+		<div style="width: 49%;">
+			<h2>{L_BLOCK_SIDE_RIGHT}</h2>
+			<table class="table1 zebra-table">
+				<thead>
+					<tr>
+						<th>{L_BLOCK_NAME}</th>
+						<th style="text-align: center;">{L_BLOCK_MOVE_TO}</th>
+						<th style="text-align: center;">{L_BLOCK_ENABLED}</th>
+						<th>{L_ACTION}</th>
+					</tr>
+				</thead>
+				<tbody id="sidebar-right-list" class="sortable-list" data-side="right">
+				<!-- BEGIN blocks_right -->
+					<tr data-id="{blocks_right.ID}">
+						<td>
+							<i class="icon fa-arrows fa-fw drag-handle" style="cursor: move; color: #999;" title="{L_BLOCK_DRAG_DROP}"></i> 
+							<strong>{blocks_right.NAME}</strong>
+						</td>
+						<td style="text-align: center;">
+							<a href="{blocks_right.U_TOGGLE_SIDE}" class="move-side-btn" style="text-decoration: none;" title="{L_BLOCK_MOVE_TO} {L_BLOCK_SIDE_LEFT}">
+								<i class="icon acp-icon fa-arrow-circle-left fa-fw" aria-hidden="true" style="color: #ff9900;"></i>
+							</a>
+						</td>
+						<td style="text-align: center;">
+							<a href="{blocks_right.U_TOGGLE_ENABLED}" data-ajax="sidebar_toggle_enabled" style="text-decoration: none;">
+								<!-- IF blocks_right.ENABLED --><i class="icon acp-icon fa-check-circle fa-fw" style="color: #228822;" aria-hidden="true" title="{L_YES}"></i><!-- ELSE --><i class="icon acp-icon fa-times-circle fa-fw" style="color: #bcbcbc;" aria-hidden="true" title="{L_NO}"></i><!-- ENDIF -->
+							</a>
+						</td>
+						<td class="actions">
+							<!-- IF blocks_right.S_FIRST_ROW -->
+								<span class="move-up-icon" style="opacity: 0.3; pointer-events: none;">{ICON_MOVE_UP}</span>
+							<!-- ELSE -->
+								<span class="move-up-icon"><a href="{blocks_right.U_MOVE_UP}" class="move-up-btn" style="text-decoration: none;">{ICON_MOVE_UP}</a></span>
+							<!-- ENDIF -->
+
+							<!-- IF blocks_right.S_LAST_ROW -->
+								<span class="move-down-icon" style="opacity: 0.3; pointer-events: none;">{ICON_MOVE_DOWN}</span>
+							<!-- ELSE -->
+								<span class="move-down-icon"><a href="{blocks_right.U_MOVE_DOWN}" class="move-down-btn" style="text-decoration: none;">{ICON_MOVE_DOWN}</a></span>
+							<!-- ENDIF -->
+
+							<!-- IF not blocks_right.IS_SYSTEM -->
+							<a href="{blocks_right.U_EDIT}" style="text-decoration: none;">{ICON_EDIT}</a>
+							<a href="{blocks_right.U_DELETE}" data-ajax="row_delete" style="text-decoration: none;">{ICON_DELETE}</a>
+							<!-- ENDIF -->
+						</td>
+					</tr>
+				<!-- BEGINELSE -->
+					<tr class="empty-row">
+						<td colspan="4" class="row3" style="text-align: center;">{L_NO_BLOCKS}</td>
+					</tr>
+				<!-- END blocks_right -->
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+
+<!-- ENDIF -->
+
+<!-- IF not $INCLUDED_SORTABLEJS -->
+	<!-- INCLUDEJS @vinny_sidebar/js/Sortable.min.js -->
+	<!-- DEFINE $INCLUDED_SORTABLEJS = true -->
+<!-- ENDIF -->
+
+<div id="sidebar-blocks-data" style="display: none;" data-url="{U_UPDATE_ORDER}" data-hash="{UPDATE_ORDER_HASH}"></div>
+
+<!-- INCLUDEJS @vinny_sidebar/js/acp_sidebar_blocks.js -->
+
+<!-- INCLUDE overall_footer.html -->

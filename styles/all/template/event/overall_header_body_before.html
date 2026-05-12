@@ -1,0 +1,16 @@
+<!-- IF S_VINNY_SIDEBAR_LEFT_ENABLED or S_VINNY_SIDEBAR_RIGHT_ENABLED -->
+<div class="vinny-sidebar-container">
+	<!-- IF S_VINNY_SIDEBAR_LEFT_ENABLED -->
+	<aside id="vinny-sidebar-left" class="vinny-sidebar vinny-sidebar-left" role="complementary">
+		<!-- IF not S_VINNY_SIDEBAR_HIDE_TOGGLES -->
+		<button class="vinny-sidebar-toggle" data-side="left" type="button" aria-label="{L_SIDEBAR_TOGGLE}" title="{L_SIDEBAR_TOGGLE}">
+			<i class="icon fa fa-chevron-left fa-fw" aria-hidden="true"></i>
+		</button>
+		<!-- ENDIF -->
+		<div class="vinny-sidebar-inner">
+			<!-- INCLUDE @vinny_sidebar/sidebar_left.html -->
+		</div>
+	</aside>
+	<!-- ENDIF -->
+	<main class="vinny-sidebar-content" role="main">
+<!-- ENDIF -->

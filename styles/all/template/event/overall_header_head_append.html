@@ -1,0 +1,17 @@
+<!-- IF S_VINNY_SIDEBAR_LEFT_ENABLED or S_VINNY_SIDEBAR_RIGHT_ENABLED -->
+<script>
+	(function() {
+		var html = document.documentElement;
+		var cookies = '; ' + document.cookie;
+
+		if (cookies.indexOf('; vinny_sidebar_left_hidden=1') !== -1) {
+			html.className += ' vinny-sidebar-left-hidden';
+		}
+
+		if (cookies.indexOf('; vinny_sidebar_right_hidden=1') !== -1) {
+			html.className += ' vinny-sidebar-right-hidden';
+		}
+	}());
+</script>
+<!-- INCLUDECSS @vinny_sidebar/sidebar.css -->
+<!-- ENDIF -->

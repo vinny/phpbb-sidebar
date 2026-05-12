@@ -1,0 +1,39 @@
+<div class="vinny-sidebar-clock-container">
+	<div id="vinny-sidebar-clock" class="vinny-sidebar-clock-display">
+		<span id="vinny-clock-time">00:00:00</span>
+		<span id="vinny-clock-ampm" class="vinny-sidebar-clock-ampm"></span>
+	</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+	var clockFormat = '{SIDEBAR_CLOCK_FORMAT}'; // '24' or '12'
+	var timeElement = document.getElementById('vinny-clock-time');
+	var ampmElement = document.getElementById('vinny-clock-ampm');
+
+	function updateClock() {
+		var now = new Date();
+		var originalHours = now.getHours();
+		var hours = originalHours;
+		var minutes = String(now.getMinutes()).padStart(2, '0');
+		var seconds = String(now.getSeconds()).padStart(2, '0');
+		var ampm = '';
+
+		if (clockFormat === '12') {
+			ampm = hours >= 12 ? 'PM' : 'AM';
+			hours = hours % 12;
+			hours = hours ? hours : 12; // the hour '0' should be '12'
+			ampmElement.textContent = ampm;
+			ampmElement.style.display = 'inline-block';
+		} else {
+			ampmElement.style.display = 'none';
+		}
+
+		hours = String(hours).padStart(2, '0');
+		timeElement.textContent = hours + ':' + minutes + ':' + seconds;
+	}
+
+	setInterval(updateClock, 1000);
+	updateClock(); // initial call
+});
+</script>
