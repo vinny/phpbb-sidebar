@@ -7,6 +7,7 @@ services:
             - '@config'
             - '@dbal.conn'
             - '@auth'
+            - '@dispatcher'
             - '%core.table_prefix%'
             - '%core.root_path%'
         tags:

@@ -3,8 +3,8 @@
 	"type": "phpbb-extension",
 	"description": "Sidebar Manager for phpBB. Adds customizable sidebars to the forum.",
 	"homepage": "https://github.com/vinny/phpbb-sidebar",
-	"version": "1.0.0",
-	"time": "2026-02-23",
+	"version": "1.0.1",
+	"time": "2026-05-12",
 	"keywords": ["phpbb", "extension", "add-on", "sidebar"],
 	"license": "GPL-2.0-only",
 	"authors": [

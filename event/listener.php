@@ -28,6 +28,9 @@ class listener implements EventSubscriberInterface
 	/** @var \phpbb\auth\auth */
 	protected $auth;
 
+	/** @var \phpbb\event\dispatcher_interface */
+	protected $dispatcher;
+
 	/** @var string */
 	protected $table_prefix;
 
@@ -42,16 +45,18 @@ class listener implements EventSubscriberInterface
 	 * @param \phpbb\config\config $config Config object
 	 * @param \phpbb\db\driver\driver_interface $db Database object
 	 * @param \phpbb\auth\auth $auth Auth object
+	 * @param \phpbb\event\dispatcher_interface $dispatcher Event dispatcher
 	 * @param string $table_prefix Table prefix
 	 * @param string $phpbb_root_path Root path
 	 */
-	public function __construct(\phpbb\template\template $template, \phpbb\user $user, \phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, $table_prefix, $phpbb_root_path)
+	public function __construct(\phpbb\template\template $template, \phpbb\user $user, \phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\event\dispatcher_interface $dispatcher, $table_prefix, $phpbb_root_path)
 	{
 		$this->template = $template;
 		$this->user = $user;
 		$this->config = $config;
 		$this->db = $db;
 		$this->auth = $auth;
+		$this->dispatcher = $dispatcher;
 		$this->table_prefix = $table_prefix;
 		$this->phpbb_root_path = $phpbb_root_path;
 	}
@@ -141,18 +146,18 @@ class listener implements EventSubscriberInterface
 								'SIDEBAR_USER_FULL'		=> $username_full,
 							]);
 
-							$template_file = 'blocks/welcome.html';
+							$template_file = '@vinny_sidebar/blocks/welcome.html';
 							break;
 
 						case 'SIDEBAR_NEWEST_MEMBER':
-							$template_file = 'blocks/newest_member.html';
+							$template_file = '@vinny_sidebar/blocks/newest_member.html';
 							$this->template->assign_vars([
 								'SIDEBAR_NEWEST_USER' => \get_username_string('full', $this->config['newest_user_id'], $this->config['newest_username'], $this->config['newest_user_colour']),
 							]);
 							break;
 
 						case 'SIDEBAR_STATISTICS':
-							$template_file = 'blocks/statistics.html';
+							$template_file = '@vinny_sidebar/blocks/statistics.html';
 							$this->template->assign_vars([
 								'SIDEBAR_STAT_POSTS'   => $this->config['num_posts'],
 								'SIDEBAR_STAT_TOPICS'  => $this->config['num_topics'],
@@ -161,28 +166,28 @@ class listener implements EventSubscriberInterface
 							break;
 
 						case 'SIDEBAR_SEARCH':
-							$template_file = 'blocks/search.html';
+							$template_file = '@vinny_sidebar/blocks/search.html';
 							$this->template->assign_vars([
 								'U_SEARCH' => \append_sid("{$this->phpbb_root_path}search.php"),
 							]);
 							break;
 
 						case 'SIDEBAR_MENU':
-							$template_file = 'blocks/menu.html';
+							$template_file = '@vinny_sidebar/blocks/menu.html';
 							break;
 
 						case 'SIDEBAR_RECENT_TOPICS':
-							$template_file = 'blocks/recent_topics.html';
+							$template_file = '@vinny_sidebar/blocks/recent_topics.html';
 							$this->render_recent_topics();
 							break;
 
 						case 'SIDEBAR_RECENT_POSTS':
-							$template_file = 'blocks/recent_posts.html';
+							$template_file = '@vinny_sidebar/blocks/recent_posts.html';
 							$this->render_recent_posts();
 							break;
 							
 						case 'SIDEBAR_CLOCK':
-							$template_file = 'blocks/clock.html';
+							$template_file = '@vinny_sidebar/blocks/clock.html';
 							$clock_format = isset($this->config['vinny_sidebar_clock_format']) ? $this->config['vinny_sidebar_clock_format'] : '24';
 							$clock_format = in_array($clock_format, ['12', '24'], true) ? $clock_format : '24';
 							$this->template->assign_vars([
@@ -191,7 +196,7 @@ class listener implements EventSubscriberInterface
 							break;
 							
 						case 'SIDEBAR_CALENDAR':
-							$template_file = 'blocks/calendar.html';
+							$template_file = '@vinny_sidebar/blocks/calendar.html';
 							break;
 					}
 				}
@@ -200,7 +205,27 @@ class listener implements EventSubscriberInterface
 					'TITLE'			=> $title,
 					'CONTENT'		=> $content,
 					'TEMPLATE_FILE'	=> $template_file,
+					'S_DISPLAY'		=> true,
 				];
+
+				if ($row['block_is_system'])
+				{
+					/**
+					 * Allow other extensions to modify a sidebar system block before display.
+					 *
+					 * @event vinny.sidebar.render_system_block
+					 * @var array block_data Template data assigned to the sidebar block
+					 * @var array row        Database row for the current sidebar block
+					 * @since 1.0.0
+					 */
+					$vars = ['block_data', 'row'];
+					extract($this->dispatcher->trigger_event('vinny.sidebar.render_system_block', compact($vars)));
+				}
+
+				if (empty($block_data['S_DISPLAY']))
+				{
+					continue;
+				}
 				
 				if ($row['sidebar_side'] == 'left' && $enable_left)
 				{
