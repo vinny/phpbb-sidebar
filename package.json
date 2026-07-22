@@ -1,0 +1,24 @@
+{
+  "name": "vinny-sidebar",
+  "version": "1.1.0",
+  "description": "Development tooling and linters for phpBB Sidebar extension",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint:js": "eslint \"adm/style/js/**/*.js\" \"adm/style/*.html\" \"styles/all/template/**/*.html\"",
+    "lint:js:fix": "eslint \"adm/style/js/**/*.js\" \"adm/style/*.html\" \"styles/all/template/**/*.html\" --fix",
+    "lint:css": "stylelint \"adm/style/css/*.css\" \"styles/all/theme/*.css\"",
+    "lint:css:fix": "stylelint \"adm/style/css/*.css\" \"styles/all/theme/*.css\" --fix",
+    "lint": "npm run lint:js && npm run lint:css",
+    "test:php": "php vendor/phpunit/phpunit/phpunit",
+    "test": "npm run lint && npm run test:php"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "eslint": "^9.0.0",
+    "eslint-plugin-html": "^8.1.0",
+    "globals": "^15.0.0",
+    "stylelint": "^16.0.0",
+    "stylelint-config-standard": "^36.0.0"
+  }
+}

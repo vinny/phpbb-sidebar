@@ -1,4 +1,4 @@
-# Sidebar Manager for phpBB
+# Sidebar Manager for phpBB [![Build Status](https://github.com/vinny/phpbb-sidebar/workflows/Tests/badge.svg)](https://github.com/vinny/phpbb-sidebar/actions)
 
 ## Extension Description
 A flexible sidebar management system for phpBB forums. It allows administrators to add, organize, and customise widgets on both the left and right sides of the board.
@@ -9,7 +9,7 @@ A flexible sidebar management system for phpBB forums. It allows administrators 
 - **Drag & Drop ACP:** Intuitive Admin Control Panel interface to easily reorder and move blocks between layout columns.
 - **Responsive & Native:** Automatically hides on mobile devices and features a seamless Flexbox integration that perfectly adapts to any desktop screen resolution.
 - **Toggleable Sidebars:** Users can manually collapse or expand sidebars for a distraction-free reading experience (user preference is saved via cookies).
-- **Custom HTML Blocks:** Create your own unlimited personalized widgets using custom HTML.
+- **Custom HTML & BBCode Blocks:** Create your own unlimited personalized widgets using custom HTML or BBCode.
 - **Built-in System Blocks:** Comes ready out-of-the-box with useful widgets like Welcome Panel, Forum Statistics, Quick Search, Clock, Calendar, Newest Member, and Recent Topics/Posts.
 - **Page Exclusion Rules:** Choose specific pages where the sidebars should be hidden.
 - **Granular Control:** Quickly enable, disable, or delete individual blocks directly from the admin panel with a single click.
@@ -41,7 +41,7 @@ The child extension is responsible for:
 - assigning template variables;
 - providing the block-specific template and CSS.
 
-Child extensions integrate through the `vinny.sidebar.render_system_block` event. This keeps Sidebar Manager stable while allowing new blocks to be distributed as separate extensions.
+Child extensions integrate through the `vinny.sidebar.render_block` event. This keeps Sidebar Manager stable while allowing new blocks to be distributed as separate extensions.
 
 ## Support
 

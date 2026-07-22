@@ -1,9 +1,10 @@
 <?php
 /**
  *
- * @package phpBB Extension - vinny/sidebar
- * @copyright (c) Vinny
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+ * Sidebar Manager extension. An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2026 Vinny <https://github.com/vinny/phpbb-sidebar>
+ * @license GNU General Public License, version 2 (GPL-2.0)
  *
  */
 
@@ -28,7 +29,7 @@ class sidebar_module
 		$this->page_title = $language->lang('ACP_VINNY_SIDEBAR_' . strtoupper($mode));
 
 		add_form_key('vinny_sidebar');
-		
+
 		$blocks_table = $table_prefix . 'vinny_sidebar_blocks';
 
 		if ($mode == 'settings')
@@ -68,6 +69,8 @@ class sidebar_module
 
 				$phpbb_log->add('admin', $user->data['user_id'], $user->ip, 'LOG_VINNY_SIDEBAR_SETTINGS');
 
+				$this->purge_sidebar_cache();
+
 				trigger_error($language->lang('CONFIG_UPDATED') . adm_back_link($this->u_action));
 			}
 
@@ -103,6 +106,8 @@ class sidebar_module
 		}
 		else if ($mode == 'blocks')
 		{
+			global $phpbb_container, $phpbb_root_path, $phpEx;
+
 			$action = $request->variable('action', '');
 			$block_id = $request->variable('block', 0);
 
@@ -113,14 +118,27 @@ class sidebar_module
 
 			if ($action == 'add' || $action == 'edit')
 			{
+				$language->add_lang('posting');
+
+				if (!function_exists('display_custom_bbcodes'))
+				{
+					include($phpbb_root_path . 'includes/functions_display.' . $phpEx);
+				}
+				if (!class_exists('parse_message'))
+				{
+					include($phpbb_root_path . 'includes/message_parser.' . $phpEx);
+				}
+
 				$block_data = [];
+				$block_content_text = '';
+
 				if ($action == 'edit' && $block_id)
 				{
 					$sql = 'SELECT * FROM ' . $blocks_table . ' WHERE block_id = ' . (int) $block_id;
 					$result = $db->sql_query($sql);
 					$block_data = $db->sql_fetchrow($result);
 					$db->sql_freeresult($result);
-					
+
 					if (!$block_data)
 					{
 						trigger_error($language->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
@@ -129,6 +147,17 @@ class sidebar_module
 					if ($block_data['block_is_system'])
 					{
 						trigger_error($language->lang('CANNOT_EDIT_SYSTEM_BLOCK') . adm_back_link($this->u_action), E_USER_WARNING);
+					}
+
+					$parse_bbcode = isset($block_data['block_parse_bbcode']) ? (int) $block_data['block_parse_bbcode'] : 1;
+					if ($parse_bbcode)
+					{
+						$edit_data = generate_text_for_edit($block_data['block_content'], $block_data['bbcode_uid'], $block_data['bbcode_options']);
+						$block_content_text = $edit_data['text'];
+					}
+					else
+					{
+						$block_content_text = $block_data['block_content'];
 					}
 				}
 
@@ -145,12 +174,42 @@ class sidebar_module
 						trigger_error($language->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
 					}
 
-					$block_data = [
-						'block_name'	=> $request->variable('block_name', '', true),
-						'block_content'	=> $request->variable('block_content', '', true),
-						'sidebar_side'	=> $request->variable('sidebar_side', 'left'),
-						'block_enabled'	=> $request->variable('block_enabled', 1),
-					];
+					$parse_bbcode = $request->variable('block_parse_bbcode', 0);
+					$original_content = $request->variable('block_content', '', true);
+
+					if ($parse_bbcode)
+					{
+						$storage_content = $original_content;
+						$uid = $bitfield = '';
+						$flags = 7; // BBCODE | SMILIES | URLS
+						generate_text_for_storage($storage_content, $uid, $bitfield, $flags, true, true, true);
+
+						$block_data = [
+							'block_name'			=> $request->variable('block_name', '', true),
+							'block_parse_bbcode'	=> 1,
+							'block_content'			=> $storage_content,
+							'bbcode_uid'			=> $uid,
+							'bbcode_bitfield'		=> $bitfield,
+							'bbcode_options'		=> $flags,
+							'sidebar_side'			=> $request->variable('sidebar_side', 'left'),
+							'block_enabled'			=> $request->variable('block_enabled', 1),
+						];
+						$block_content_text = $original_content;
+					}
+					else
+					{
+						$block_data = [
+							'block_name'			=> $request->variable('block_name', '', true),
+							'block_parse_bbcode'	=> 0,
+							'block_content'			=> $original_content,
+							'bbcode_uid'			=> '',
+							'bbcode_bitfield'		=> '',
+							'bbcode_options'		=> 0,
+							'sidebar_side'			=> $request->variable('sidebar_side', 'left'),
+							'block_enabled'			=> $request->variable('block_enabled', 1),
+						];
+						$block_content_text = $original_content;
+					}
 
 					if (!in_array($block_data['sidebar_side'], ['left', 'right'], true))
 					{
@@ -179,7 +238,14 @@ class sidebar_module
 
 					if ($preview)
 					{
-						$block_preview = htmlspecialchars_decode($block_data['block_content'], ENT_COMPAT);
+						if ($block_data['block_parse_bbcode'])
+						{
+							$block_preview = generate_text_for_display($storage_content, $uid, $bitfield, $flags);
+						}
+						else
+						{
+							$block_preview = htmlspecialchars_decode($block_data['block_content'], ENT_COMPAT);
+						}
 					}
 
 					if ($analyse)
@@ -197,6 +263,7 @@ class sidebar_module
 						$sql = 'INSERT INTO ' . $blocks_table . ' ' . $db->sql_build_array('INSERT', $block_data);
 						$db->sql_query($sql);
 						$phpbb_log->add('admin', $user->data['user_id'], $user->ip, 'LOG_VINNY_SIDEBAR_BLOCK_ADDED', false, [$block_data['block_name']]);
+						$this->purge_sidebar_cache();
 						trigger_error($language->lang('BLOCK_ADDED') . adm_back_link($this->u_action));
 					}
 					else if ($submit)
@@ -204,23 +271,43 @@ class sidebar_module
 						$sql = 'UPDATE ' . $blocks_table . ' SET ' . $db->sql_build_array('UPDATE', $block_data) . ' WHERE block_id = ' . (int) $block_id;
 						$db->sql_query($sql);
 						$phpbb_log->add('admin', $user->data['user_id'], $user->ip, 'LOG_VINNY_SIDEBAR_BLOCK_UPDATED', false, [$block_data['block_name']]);
+						$this->purge_sidebar_cache();
 						trigger_error($language->lang('BLOCK_UPDATED') . adm_back_link($this->u_action));
 					}
 				}
 
+				/** @var \phpbb\controller\helper $controller_helper */
+				$controller_helper = $phpbb_container->get('controller.helper');
+
 				$template->assign_vars([
-					'S_EDIT_BLOCK' 		=> true,
-					'BLOCK_FORM_TITLE'	=> ($action == 'add') ? $language->lang('ACP_VINNY_SIDEBAR_BLOCK_ADD') : $language->lang('ACP_VINNY_SIDEBAR_BLOCK_EDIT'),
-					'U_ACTION' 			=> $this->u_action . '&amp;action=' . $action . ($block_id ? '&amp;block=' . $block_id : ''),
-					'BLOCK_NAME'		=> (isset($block_data['block_name'])) ? $block_data['block_name'] : '',
-					'BLOCK_CONTENT'		=> (isset($block_data['block_content'])) ? $block_data['block_content'] : '',
-					'SIDEBAR_SIDE'		=> (isset($block_data['sidebar_side'])) ? $block_data['sidebar_side'] : 'left',
-					'BLOCK_ENABLED'		=> (isset($block_data['block_enabled'])) ? $block_data['block_enabled'] : 1,
-					'S_BLOCK_PREVIEW'	=> $block_preview !== '',
-					'BLOCK_PREVIEW'		=> $block_preview,
-					'S_BLOCK_ANALYSIS'	=> !empty($analysis_results),
-					'U_BACK'			=> $this->u_action,
+					'S_EDIT_BLOCK' 				=> true,
+					'S_EDIT_BLOCK_SUBMITTED'	=> ($submit || $preview || $analyse),
+					'BLOCK_FORM_TITLE'			=> ($action == 'add') ? $language->lang('ACP_VINNY_SIDEBAR_BLOCK_ADD') : $language->lang('ACP_VINNY_SIDEBAR_BLOCK_EDIT'),
+					'U_ACTION' 					=> $this->u_action . '&amp;action=' . $action . ($block_id ? '&amp;block=' . $block_id : ''),
+					'BLOCK_NAME'				=> (isset($block_data['block_name'])) ? $block_data['block_name'] : '',
+					'S_PARSE_BBCODE'			=> (isset($block_data['block_parse_bbcode'])) ? (bool) $block_data['block_parse_bbcode'] : true,
+					'BLOCK_CONTENT'				=> $block_content_text,
+					'SIDEBAR_SIDE'				=> (isset($block_data['sidebar_side'])) ? $block_data['sidebar_side'] : 'left',
+					'BLOCK_ENABLED'				=> (isset($block_data['block_enabled'])) ? $block_data['block_enabled'] : 1,
+					'S_BLOCK_PREVIEW'			=> $block_preview !== '',
+					'BLOCK_PREVIEW'				=> $block_preview,
+					'S_BLOCK_ANALYSIS'			=> !empty($analysis_results),
+					'U_BACK'					=> $this->u_action,
+
+					'BBCODE_STATUS'				=> $language->lang('BBCODE_IS_ON', '<a href="' . $controller_helper->route('phpbb_help_bbcode_controller') . '">', '</a>'),
+					'SMILIES_STATUS'			=> $language->lang('SMILIES_ARE_ON'),
+					'IMG_STATUS'				=> $language->lang('IMAGES_ARE_ON'),
+					'FLASH_STATUS'				=> $language->lang('FLASH_IS_ON'),
+					'URL_STATUS'				=> $language->lang('URL_IS_ON'),
+
+					'S_BBCODE_ALLOWED'			=> true,
+					'S_SMILIES_ALLOWED'			=> true,
+					'S_BBCODE_IMG'				=> true,
+					'S_BBCODE_FLASH'			=> true,
+					'S_LINKS_ALLOWED'			=> true,
 				]);
+
+				display_custom_bbcodes();
 
 				foreach ($analysis_results as $result)
 				{
@@ -252,6 +339,7 @@ class sidebar_module
 					$sql = 'DELETE FROM ' . $blocks_table . ' WHERE block_id = ' . (int) $block_id;
 					$db->sql_query($sql);
 					$phpbb_log->add('admin', $user->data['user_id'], $user->ip, 'LOG_VINNY_SIDEBAR_BLOCK_DELETED', false, [$row['block_name']]);
+					$this->purge_sidebar_cache();
 					trigger_error($language->lang('BLOCK_DELETED') . adm_back_link($this->u_action));
 				}
 				else
@@ -273,9 +361,10 @@ class sidebar_module
 				$db->sql_freeresult($result);
 
 				$new_status = ($current_status) ? 0 : 1;
-				
+
 				$sql = 'UPDATE ' . $blocks_table . ' SET block_enabled = ' . $new_status . ' WHERE block_id = ' . (int) $block_id;
 				$db->sql_query($sql);
+				$this->purge_sidebar_cache();
 
 				if ($request->is_ajax())
 				{
@@ -317,9 +406,10 @@ class sidebar_module
 
 				$current_side = $row['sidebar_side'];
 				$new_side = ($current_side == 'left') ? 'right' : 'left';
-				
+
 				$sql = 'UPDATE ' . $blocks_table . " SET sidebar_side = '" . $db->sql_escape($new_side) . "' WHERE block_id = " . (int) $block_id;
 				$db->sql_query($sql);
+				$this->purge_sidebar_cache();
 
 				if ($request->is_ajax())
 				{
@@ -366,6 +456,7 @@ class sidebar_module
 						// Swap orders
 						$db->sql_query('UPDATE ' . $blocks_table . ' SET block_order = ' . (int) $adjacent_row['block_order'] . ' WHERE block_id = ' . (int) $block_id);
 						$db->sql_query('UPDATE ' . $blocks_table . ' SET block_order = ' . (int) $current_order . ' WHERE block_id = ' . (int) $adjacent_row['block_id']);
+						$this->purge_sidebar_cache();
 
 						if ($request->is_ajax())
 						{
@@ -393,7 +484,7 @@ class sidebar_module
 
 				$order_json = htmlspecialchars_decode($request->variable('order', '', true));
 				$order_data = json_decode($order_json, true);
-				
+
 				if (is_array($order_data))
 				{
 					$db->sql_transaction('begin');
@@ -404,7 +495,7 @@ class sidebar_module
 						{
 							continue;
 						}
-						
+
 						if (is_array($ids))
 						{
 							foreach ($ids as $index => $id)
@@ -419,19 +510,42 @@ class sidebar_module
 					}
 
 					$db->sql_transaction('commit');
+					$this->purge_sidebar_cache();
 				}
 
 				$json_response = new \phpbb\json_response;
 				$json_response->send(['success' => true]);
 			}
+			else if ($action == 'purge_cache')
+			{
+				if (!check_link_hash($request->variable('hash', ''), 'purge_cache'))
+				{
+					trigger_error($language->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
+				}
+				$this->purge_sidebar_cache();
+				$phpbb_log->add('admin', $user->data['user_id'], $user->ip, 'LOG_VINNY_SIDEBAR_CACHE_PURGED');
+				trigger_error($language->lang('SIDEBAR_CACHE_PURGED') . adm_back_link($this->u_action));
+			}
 			else
 			{
 				// Block List View
+				$left_active = $left_disabled = 0;
+				$right_active = $right_disabled = 0;
+
 				$sql = 'SELECT * FROM ' . $blocks_table . ' ORDER BY sidebar_side ASC, block_order ASC';
 				$result = $db->sql_query($sql);
-				
+
 				while ($row = $db->sql_fetchrow($result))
 				{
+					if ($row['sidebar_side'] == 'left')
+					{
+						$row['block_enabled'] ? $left_active++ : $left_disabled++;
+					}
+					else
+					{
+						$row['block_enabled'] ? $right_active++ : $right_disabled++;
+					}
+
 					$block_var_name = ($row['sidebar_side'] == 'left') ? 'blocks_left' : 'blocks_right';
 					$template->assign_block_vars($block_var_name, [
 						'ID'		=> $row['block_id'],
@@ -448,11 +562,14 @@ class sidebar_module
 					]);
 				}
 				$db->sql_freeresult($result);
-				
+
 				$template->assign_vars([
-					'U_ACTION' 			=> $this->u_action,
-					'U_UPDATE_ORDER'	=> $this->u_action . '&amp;action=update_order',
-					'UPDATE_ORDER_HASH'	=> generate_link_hash('update_order'),
+					'U_ACTION' 				=> $this->u_action,
+					'U_UPDATE_ORDER'		=> $this->u_action . '&amp;action=update_order',
+					'UPDATE_ORDER_HASH'		=> generate_link_hash('update_order'),
+					'U_PURGE_CACHE'			=> $this->u_action . '&amp;action=purge_cache&amp;hash=' . generate_link_hash('purge_cache'),
+					'LEFT_STATUS_SUMMARY'	=> $language->lang('BLOCKS_STATUS_SUMMARY', $left_active, $left_disabled),
+					'RIGHT_STATUS_SUMMARY'	=> $language->lang('BLOCKS_STATUS_SUMMARY', $right_active, $right_disabled),
 				]);
 			}
 		}
@@ -553,5 +670,18 @@ class sidebar_module
 		}
 
 		return $results;
+	}
+
+	/**
+	 * Destroys the compiled sidebar blocks cache.
+	 */
+	protected function purge_sidebar_cache()
+	{
+		global $phpbb_container;
+		if ($phpbb_container !== null && $phpbb_container->has('cache.driver'))
+		{
+			$cache = $phpbb_container->get('cache.driver');
+			$cache->destroy('_vinny_sidebar_blocks');
+		}
 	}
 }

@@ -1,0 +1,32 @@
+# Auto-detect text files and perform LF normalization
+* text=auto eol=lf
+
+# Binary files
+*.png binary
+*.gif binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
+*.zip binary
+
+# Export-ignore: Exclude all development, CI, testing, and configuration files from distribution packages
+/.git* export-ignore
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/.github export-ignore
+/.phpunit.cache export-ignore
+/.phpunit.result.cache export-ignore
+/.stylelintcache export-ignore
+/.eslintrc.json export-ignore
+/.stylelintrc.json export-ignore
+/eslint.config.js export-ignore
+/stylelint.config.js export-ignore
+/phpunit.xml.dist export-ignore
+/README.md export-ignore
+/package.json export-ignore
+/package-lock.json export-ignore
+/composer.lock export-ignore
+/tests export-ignore
+/node_modules export-ignore
+/vendor export-ignore
+/coverage export-ignore

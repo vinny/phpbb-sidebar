@@ -1,3 +1,74 @@
+.vinny-sidebar-back-link {
+	float: right;
+}
+
+.vinny-sidebar-bbcode-row {
+	margin-top: 10px;
+}
+
+.color-palette-dt {
+	width: 90px;
+}
+
+.vinny-sidebar-content-textarea {
+	width: 95%;
+}
+
+.vinny-sidebar-status-dd {
+	margin-top: 5px;
+}
+
+.vinny-sidebar-columns-container {
+	display: flex;
+	gap: 2%;
+	width: 100%;
+	justify-content: space-between;
+}
+
+.vinny-sidebar-column {
+	width: 49%;
+}
+
+.vinny-sidebar-status-summary {
+	font-weight: normal;
+	font-size: 13px;
+	opacity: 0.8;
+}
+
+.vinny-sidebar-cell-center {
+	text-align: center;
+}
+
+.vinny-sidebar-drag-handle {
+	cursor: move;
+	color: #999;
+}
+
+.vinny-sidebar-icon-link,
+.vinny-sidebar-icon-link:hover,
+.vinny-sidebar-icon-link:focus,
+.vinny-sidebar-icon-link:active,
+.move-side-btn,
+.move-side-btn:hover,
+.move-side-btn:focus,
+.move-up-btn,
+.move-up-btn:hover,
+.move-up-btn:focus,
+.move-down-btn,
+.move-down-btn:hover,
+.move-down-btn:focus {
+	text-decoration: none !important;
+	background: none !important;
+	border: none !important;
+	outline: none !important;
+	box-shadow: none !important;
+}
+
+.vinny-sidebar-icon-disabled-arrow {
+	opacity: 0.3 !important;
+	pointer-events: none;
+}
+
 .vinny-sidebar-preview-frame {
 	background: #eef1f4;
 	border: 1px solid #c8d0d8;
@@ -15,7 +86,7 @@
 
 .vinny-sidebar-preview-sidebar,
 .vinny-sidebar-preview-content {
-	background: #ffffff;
+	background: #fff;
 	border: 1px solid #d7dde3;
 	border-radius: 4px;
 	box-sizing: border-box;
@@ -29,7 +100,7 @@
 
 .vinny-sidebar-preview-sidebar-active {
 	border-color: #12a3eb;
-	box-shadow: 0 0 0 2px rgba(18, 163, 235, 0.25);
+	box-shadow: 0 0 0 2px rgb(18 163 235 / 25%);
 }
 
 .vinny-sidebar-preview-label {
@@ -72,7 +143,7 @@
 	background: #f9f9f9;
 	border: 1px solid #ced4da;
 	border-radius: 8px;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 2px 5px rgb(0 0 0 / 10%);
 	margin-bottom: 12px;
 	overflow: hidden;
 }
@@ -80,8 +151,8 @@
 .vinny-sidebar-preview-block-header {
 	background: #12a3eb;
 	background: linear-gradient(135deg, #12a3eb 0%, #0076b1 100%);
-	border-bottom: 2px solid rgba(0, 0, 0, 0.1);
-	color: #ffffff;
+	border-bottom: 2px solid rgb(0 0 0 / 10%);
+	color: #fff;
 	font-size: 12px;
 	font-weight: bold;
 	padding: 8px 10px;
@@ -90,7 +161,7 @@
 }
 
 .vinny-sidebar-preview-block-content {
-	color: #333333;
+	color: #333;
 	font-size: 11px;
 	line-height: 1.3;
 	padding: 10px;

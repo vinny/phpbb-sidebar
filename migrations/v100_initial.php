@@ -1,9 +1,10 @@
 <?php
 /**
  *
- * @package phpBB Extension - vinny/sidebar
- * @copyright (c) Vinny
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+ * Sidebar Manager extension. An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2026 Vinny <https://github.com/vinny/phpbb-sidebar>
+ * @license GNU General Public License, version 2 (GPL-2.0)
  *
  */
 

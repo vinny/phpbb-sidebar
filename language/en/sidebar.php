@@ -1,9 +1,10 @@
 <?php
 /**
  *
- * @package phpBB Extension - vinny/sidebar
- * @copyright (c) Vinny
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+ * Sidebar Manager extension. An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2026 Vinny <https://github.com/vinny/phpbb-sidebar>
+ * @license GNU General Public License, version 2 (GPL-2.0)
  *
  */
 
@@ -28,7 +29,7 @@ $lang = array_merge($lang, [
 	'SIDEBAR_SEARCH'				=> 'Search',
 	'SIDEBAR_CLOCK'					=> 'Clock',
 	'SIDEBAR_CALENDAR'				=> 'Calendar',
-	
+
 	'SIDEBAR_STATISTICS'			=> 'Forum Statistics',
 	'SIDEBAR_WELCOME'				=> 'Welcome',
 	'SIDEBAR_WELCOME_GUEST'			=> 'To access all features and post messages, please login or register an account',

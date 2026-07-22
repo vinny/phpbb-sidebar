@@ -26,7 +26,7 @@ $(document).ready(function() {
 				}),
 				hash: updateOrderHash
 			},
-			success: function(response) {
+			success: function(_response) {
 				// For reload to sync U_MOVE_UP, U_MOVE_DOWN URLs properly!
 				window.location.reload(); 
 			}

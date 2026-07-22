@@ -1,9 +1,10 @@
 <?php
 /**
  *
- * @package phpBB Extension - vinny/sidebar
- * @copyright (c) Vinny
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+ * Sidebar Manager extension. An extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2026 Vinny <https://github.com/vinny/phpbb-sidebar>
+ * @license GNU General Public License, version 2 (GPL-2.0)
  *
  */
 
@@ -21,10 +22,10 @@ $lang = array_merge($lang, [
 	'ACP_VINNY_SIDEBAR'				=> 'Sidebar Manager',
 	'ACP_VINNY_SIDEBAR_SETTINGS'	=> 'Settings',
 	'ACP_VINNY_SIDEBAR_BLOCKS'		=> 'Manage Blocks',
-	
+
 	'VINNY_SIDEBAR'					=> 'Sidebar Manager',
-	'VINNY_SIDEBAR_EXPLAIN'			=> 'Here you can manage the sidebars and their blocks.',
-	
+	'VINNY_SIDEBAR_EXPLAIN'			=> 'Here you can manage the sidebars and their blocks. Note that system blocks cannot be deleted, as their content is generated dynamically by code logic.',
+
 	// Settings
 	'VINNY_SIDEBAR_ENABLE'			=> 'Enable Sidebar functionality',
 	'VINNY_SIDEBAR_ENABLE_EXPLAIN'	=> 'A global switch to enable or disable the entire sidebar system.',
@@ -32,24 +33,32 @@ $lang = array_merge($lang, [
 	'VINNY_SIDEBAR_RIGHT_ENABLE'	=> 'Enable Right Sidebar',
 	'VINNY_SIDEBAR_HIDE_TOGGLES'			=> 'Hide toggle buttons',
 	'VINNY_SIDEBAR_HIDE_TOGGLES_EXPLAIN'	=> 'If enabled, the buttons that allow users to show/hide the sidebar will not be displayed, preventing them from collapsing the sidebar.',
-	
+
 	// Logs
-	'LOG_VINNY_SIDEBAR_SETTINGS'	=> '<strong>Sidebar Manager settings updated</strong>',
-	'LOG_VINNY_SIDEBAR_BLOCK_ADDED'	=> '<strong>Sidebar block added</strong><br />» %s',
+	'LOG_VINNY_SIDEBAR_SETTINGS'		=> '<strong>Sidebar Manager settings updated</strong>',
+	'LOG_VINNY_SIDEBAR_BLOCK_ADDED'		=> '<strong>Sidebar block added</strong><br />» %s',
 	'LOG_VINNY_SIDEBAR_BLOCK_UPDATED'	=> '<strong>Sidebar block updated</strong><br />» %s',
 	'LOG_VINNY_SIDEBAR_BLOCK_DELETED'	=> '<strong>Sidebar block deleted</strong><br />» %s',
-	
+	'LOG_VINNY_SIDEBAR_CACHE_PURGED'	=> '<strong>Sidebar cache purged</strong>',
+
+	// Cache & Actions
+	'PURGE_SIDEBAR_CACHE'				=> 'Purge Sidebar Cache',
+	'SIDEBAR_CACHE_PURGED'				=> 'Sidebar cache was successfully purged.',
+	'BLOCKS_STATUS_SUMMARY'				=> '%1$d active, %2$d disabled',
+
 	// Blocks
 	'ACP_VINNY_SIDEBAR_BLOCK_ADD'	=> 'Add Custom Block',
 	'ACP_VINNY_SIDEBAR_BLOCK_EDIT'	=> 'Edit Block',
 	'BLOCK_NAME'					=> 'Block Name',
+	'PARSE_BBCODE'					=> 'Parse BBCode',
+	'PARSE_BBCODE_EXPLAIN'			=> 'If enabled, BBCode formatting, smilies, and URLs will be parsed for this block. If disabled, raw trusted HTML code is rendered directly.',
 	'BLOCK_SIDE'					=> 'Sidebar Side',
 	'BLOCK_SIDE_LEFT'				=> 'Left Sidebar',
 	'BLOCK_SIDE_RIGHT'				=> 'Right Sidebar',
 	'BLOCK_MOVE_TO'					=> 'Move to',
 	'BLOCK_DRAG_DROP'				=> 'Drag & Drop',
 	'BLOCK_CONTENT'					=> 'Block Content',
-	'BLOCK_CONTENT_EXPLAIN'			=> 'Enter trusted HTML code for this block. BBCodes are not supported. This code is rendered directly on forum pages, so only trusted administrators should add scripts, iframes, forms, tracking pixels, or third-party code.',
+	'BLOCK_CONTENT_EXPLAIN'			=> 'Enter the content for this block. For BBCode blocks, standard BBCode formatting, smilies, and links are supported. For HTML blocks, trusted HTML code is rendered directly, so only trusted administrators should add scripts, iframes, forms, or third-party widgets.',
 	'BLOCK_TRUSTED_HTML_WARNING'	=> 'Only add HTML from trusted sources. Scripts, iframes, forms, and third-party widgets can affect visitors, load external resources, or interact with cookies and tracking systems.',
 	'BLOCK_PREVIEW'					=> 'Preview',
 	'BLOCK_PREVIEW_CONTENT_PLACEHOLDER'	=> 'Forum content area preview',
@@ -67,7 +76,7 @@ $lang = array_merge($lang, [
 	'SIDEBAR_PAGE_SEARCH'			=> 'Search page',
 	'SIDEBAR_PAGE_MEMBERLIST'		=> 'Member list',
 	'SIDEBAR_PAGE_VIEWONLINE'		=> 'Who is online page',
-	
+
 	'VINNY_SIDEBAR_CLOCK_FORMAT'	=> 'Clock Format',
 	'VINNY_SIDEBAR_CLOCK_FORMAT_EXPLAIN' => 'Choose between 24-hour and AM/PM format for the Clock block.',
 	'VINNY_SIDEBAR_CLOCK_24H'		=> '24 hour (00:00:00)',

@@ -1,4 +1,5 @@
 <!-- INCLUDE overall_header.html -->
+<!-- INCLUDECSS @vinny_sidebar/css/acp_sidebar_blocks.css -->
 
 <a id="maincontent"></a>
 
@@ -7,15 +8,51 @@
 <p>{L_VINNY_SIDEBAR_EXPLAIN}</p>
 
 <!-- IF S_EDIT_BLOCK -->
-<!-- INCLUDECSS @vinny_sidebar/css/acp_sidebar_blocks.css -->
-	<a href="{U_BACK}" style="float: {S_CONTENT_FLOW_END};">&laquo; {L_BACK}</a>
+<script>
+/* exported form_name, text_name, load_draft, upload, imageTag, toggleBbcodePanel */
+// <![CDATA[
+var form_name = 'acp_vinny_sidebar';
+var text_name = 'block_content';
+var load_draft = false;
+var upload = false;
+var imageTag = false;
+
+function toggleBbcodePanel(isBbcode) {
+	var bbcodePanel = document.getElementById('bbcode_controls_panel');
+	var htmlWarning = document.getElementById('trusted_html_warning');
+	var colorPalette = document.getElementById('color_palette_placeholder');
+	var contentDd = document.getElementById('block_content_dd');
+	var statusDd = document.getElementById('bbcode_status_dd');
+	var analyseBtn = document.getElementById('btn_analyse_html');
+
+	if (bbcodePanel) {
+		bbcodePanel.style.display = isBbcode ? 'block' : 'none';
+	}
+	if (htmlWarning) {
+		htmlWarning.style.display = isBbcode ? 'none' : 'block';
+	}
+	if (colorPalette) {
+		colorPalette.style.display = isBbcode ? 'block' : 'none';
+	}
+	if (contentDd) {
+		contentDd.style.marginLeft = isBbcode ? '90px' : '0px';
+	}
+	if (statusDd) {
+		statusDd.style.display = isBbcode ? 'block' : 'none';
+	}
+	if (analyseBtn) {
+		analyseBtn.style.display = isBbcode ? 'none' : 'inline-block';
+	}
+}
+// ]]>
+</script>
+
+	<a href="{U_BACK}" class="vinny-sidebar-back-link">&laquo; {L_BACK}</a>
 
 	<form id="acp_vinny_sidebar" method="post" action="{U_ACTION}">
 
 		<fieldset>
 			<legend>{BLOCK_FORM_TITLE}</legend>
-
-			<p class="warningbox">{L_BLOCK_TRUSTED_HTML_WARNING}</p>
 
 			<dl>
 				<dt><label for="block_name">{L_BLOCK_NAME}{L_COLON}</label></dt>
@@ -37,7 +74,26 @@
 			</dl>
 			<dl>
 				<dt><label for="block_content">{L_BLOCK_CONTENT}{L_COLON}</label><br /><span>{L_BLOCK_CONTENT_EXPLAIN}</span></dt>
-				<dd><textarea id="block_content" name="block_content" rows="10" cols="60" style="width: 90%;" required="required">{BLOCK_CONTENT}</textarea></dd>
+				<dd>
+					<label><input type="checkbox" class="checkbox" id="block_parse_bbcode" name="block_parse_bbcode" value="1"<!-- IF S_PARSE_BBCODE --> checked="checked"<!-- ENDIF --> onclick="toggleBbcodePanel(this.checked);" /> {L_PARSE_BBCODE}</label>
+				</dd>
+			</dl>
+
+			<p class="warningbox" id="trusted_html_warning"<!-- IF S_PARSE_BBCODE --> style="display: none;"<!-- ENDIF -->>{L_BLOCK_TRUSTED_HTML_WARNING}</p>
+
+			<div id="bbcode_controls_panel"<!-- IF not S_PARSE_BBCODE --> style="display: none;"<!-- ENDIF -->>
+				<!-- INCLUDE acp_posting_buttons.html -->
+			</div>
+
+			<dl class="responsive-columns vinny-sidebar-bbcode-row">
+				<dt class="color-palette-dt"<!-- IF not S_PARSE_BBCODE --> style="display: none;"<!-- ENDIF --> id="color_palette_placeholder" data-color-palette="v" data-height="12" data-width="15" data-bbcode="true">
+				</dt>
+				<dd id="block_content_dd" style="margin-{S_CONTENT_FLOW_BEGIN}: <!-- IF S_PARSE_BBCODE -->90px<!-- ELSE -->0<!-- ENDIF -->;">
+					<textarea id="block_content" name="block_content" rows="10" cols="60" class="vinny-sidebar-content-textarea" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onfocus="initInsertions();" data-bbcode="true" required="required">{BLOCK_CONTENT}</textarea>
+				</dd>
+				<dd id="bbcode_status_dd" class="vinny-sidebar-status-dd" style="margin-{S_CONTENT_FLOW_BEGIN}: <!-- IF S_PARSE_BBCODE -->90px<!-- ELSE -->0<!-- ENDIF -->;<!-- IF not S_PARSE_BBCODE --> display: none;<!-- ENDIF -->">
+					<small>{BBCODE_STATUS} :: {IMG_STATUS} :: {FLASH_STATUS} :: {URL_STATUS} :: {SMILIES_STATUS}</small>
+				</dd>
 			</dl>
 		</fieldset>
 
@@ -53,8 +109,8 @@
 		<!-- IF S_BLOCK_PREVIEW -->
 			<fieldset>
 				<legend>{L_BLOCK_PREVIEW}</legend>
-				<div class="vinny-sidebar-preview-frame">
-					<div class="vinny-sidebar-preview-layout">
+				<div class="vinny-sidebar-preview-container">
+					<div class="vinny-sidebar-preview-row">
 						<div class="vinny-sidebar-preview-sidebar<!-- IF SIDEBAR_SIDE == 'left' --> vinny-sidebar-preview-sidebar-active<!-- ENDIF -->">
 							<div class="vinny-sidebar-preview-label">{L_BLOCK_SIDE_LEFT}</div>
 							<!-- IF SIDEBAR_SIDE == 'left' -->
@@ -72,11 +128,10 @@
 							<!-- ENDIF -->
 						</div>
 
-						<div class="vinny-sidebar-preview-content">
-							<div class="vinny-sidebar-preview-placeholder-box">{L_BLOCK_PREVIEW_CONTENT_PLACEHOLDER}</div>
-							<div class="vinny-sidebar-preview-placeholder-line"></div>
-							<div class="vinny-sidebar-preview-placeholder-line"></div>
-							<div class="vinny-sidebar-preview-placeholder-line vinny-sidebar-preview-placeholder-line-short"></div>
+						<div class="vinny-sidebar-preview-forum">
+							<div class="vinny-sidebar-preview-forum-text">
+								{L_BLOCK_PREVIEW_CONTENT_PLACEHOLDER}
+							</div>
 						</div>
 
 						<div class="vinny-sidebar-preview-sidebar<!-- IF SIDEBAR_SIDE == 'right' --> vinny-sidebar-preview-sidebar-active<!-- ENDIF -->">
@@ -101,9 +156,9 @@
 		<!-- ENDIF -->
 
 		<fieldset class="submit-buttons">
-			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
-			<input class="button2" type="submit" name="analyse" value="{L_BLOCK_ANALYSE_HTML}" />&nbsp;
-			<input class="button2" type="submit" name="preview" value="{L_BLOCK_PREVIEW}" />&nbsp;
+			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />
+			<input class="button2" type="submit" id="btn_analyse_html" name="analyse" value="{L_BLOCK_ANALYSE_HTML}"<!-- IF S_PARSE_BBCODE --> style="display: none;"<!-- ENDIF --> />
+			<input class="button2" type="submit" name="preview" value="{L_BLOCK_PREVIEW}" />
 			<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
 			{S_FORM_TOKEN}
 		</fieldset>
@@ -113,21 +168,22 @@
 <!-- ELSE -->
 	<form id="acp_sidebar_add" method="post" action="{U_ACTION}">
 		<fieldset class="quick">
-			<input class="button2" type="submit" name="add" value="{L_ACP_VINNY_SIDEBAR_BLOCK_ADD}" />
+			<input class="button2" type="submit" name="add" value="{L_ACP_VINNY_SIDEBAR_BLOCK_ADD}" />&nbsp;
+			<a href="{U_PURGE_CACHE}"><input class="button2" type="button" value="{L_PURGE_SIDEBAR_CACHE}" /></a>
 			{S_FORM_TOKEN}
 		</fieldset>
 	</form>
 
-	<div style="display: flex; gap: 2%; width: 100%; justify-content: space-between;">
+	<div class="vinny-sidebar-columns-container">
 
-		<div style="width: 49%;">
-			<h2>{L_BLOCK_SIDE_LEFT}</h2>
+		<div class="vinny-sidebar-column">
+			<h2>{L_BLOCK_SIDE_LEFT} <span class="vinny-sidebar-status-summary">({LEFT_STATUS_SUMMARY})</span></h2>
 			<table class="table1 zebra-table">
 				<thead>
 					<tr>
 						<th>{L_BLOCK_NAME}</th>
-						<th style="text-align: center;">{L_BLOCK_MOVE_TO}</th>
-						<th style="text-align: center;">{L_BLOCK_ENABLED}</th>
+						<th class="vinny-sidebar-cell-center">{L_BLOCK_MOVE_TO}</th>
+						<th class="vinny-sidebar-cell-center">{L_BLOCK_ENABLED}</th>
 						<th>{L_ACTION}</th>
 					</tr>
 				</thead>
@@ -135,55 +191,55 @@
 				<!-- BEGIN blocks_left -->
 					<tr data-id="{blocks_left.ID}">
 						<td>
-							<i class="icon fa-arrows fa-fw drag-handle" style="cursor: move; color: #999;" title="{L_BLOCK_DRAG_DROP}"></i> 
+							<i class="icon fa-arrows fa-fw drag-handle vinny-sidebar-drag-handle" title="{L_BLOCK_DRAG_DROP}"></i> 
 							<strong>{blocks_left.NAME}</strong>
 						</td>
-						<td style="text-align: center;">
-							<a href="{blocks_left.U_TOGGLE_SIDE}" class="move-side-btn" style="text-decoration: none;" title="{L_BLOCK_MOVE_TO} {L_BLOCK_SIDE_RIGHT}">
-								<i class="icon acp-icon fa-arrow-circle-right fa-fw" aria-hidden="true" style="color: #ff9900;"></i>
+						<td class="vinny-sidebar-cell-center">
+							<a href="{blocks_left.U_TOGGLE_SIDE}" class="move-side-btn vinny-sidebar-icon-link" title="{L_BLOCK_MOVE_TO} {L_BLOCK_SIDE_RIGHT}">
+								<i class="icon acp-icon fa-arrow-circle-right fa-fw" style="color: #ff9900;" aria-hidden="true"></i>
 							</a>
 						</td>
-						<td style="text-align: center;">
-							<a href="{blocks_left.U_TOGGLE_ENABLED}" data-ajax="sidebar_toggle_enabled" style="text-decoration: none;">
+						<td class="vinny-sidebar-cell-center">
+							<a href="{blocks_left.U_TOGGLE_ENABLED}" data-ajax="sidebar_toggle_enabled" class="vinny-sidebar-icon-link">
 								<!-- IF blocks_left.ENABLED --><i class="icon acp-icon fa-check-circle fa-fw" style="color: #228822;" aria-hidden="true" title="{L_YES}"></i><!-- ELSE --><i class="icon acp-icon fa-times-circle fa-fw" style="color: #bcbcbc;" aria-hidden="true" title="{L_NO}"></i><!-- ENDIF -->
 							</a>
 						</td>
 						<td class="actions">
 							<!-- IF blocks_left.S_FIRST_ROW -->
-								<span class="move-up-icon" style="opacity: 0.3; pointer-events: none;">{ICON_MOVE_UP}</span>
+								<span class="move-up-icon vinny-sidebar-icon-disabled-arrow">{ICON_MOVE_UP}</span>
 							<!-- ELSE -->
-								<span class="move-up-icon"><a href="{blocks_left.U_MOVE_UP}" class="move-up-btn" style="text-decoration: none;">{ICON_MOVE_UP}</a></span>
+								<span class="move-up-icon"><a href="{blocks_left.U_MOVE_UP}" class="move-up-btn vinny-sidebar-icon-link">{ICON_MOVE_UP}</a></span>
 							<!-- ENDIF -->
 
 							<!-- IF blocks_left.S_LAST_ROW -->
-								<span class="move-down-icon" style="opacity: 0.3; pointer-events: none;">{ICON_MOVE_DOWN}</span>
+								<span class="move-down-icon vinny-sidebar-icon-disabled-arrow">{ICON_MOVE_DOWN}</span>
 							<!-- ELSE -->
-								<span class="move-down-icon"><a href="{blocks_left.U_MOVE_DOWN}" class="move-down-btn" style="text-decoration: none;">{ICON_MOVE_DOWN}</a></span>
+								<span class="move-down-icon"><a href="{blocks_left.U_MOVE_DOWN}" class="move-down-btn vinny-sidebar-icon-link">{ICON_MOVE_DOWN}</a></span>
 							<!-- ENDIF -->
 
 							<!-- IF not blocks_left.IS_SYSTEM -->
-							<a href="{blocks_left.U_EDIT}" style="text-decoration: none;">{ICON_EDIT}</a>
-							<a href="{blocks_left.U_DELETE}" data-ajax="row_delete" style="text-decoration: none;">{ICON_DELETE}</a>
+							<a href="{blocks_left.U_EDIT}" class="vinny-sidebar-icon-link">{ICON_EDIT}</a>
+							<a href="{blocks_left.U_DELETE}" data-ajax="row_delete" class="vinny-sidebar-icon-link">{ICON_DELETE}</a>
 							<!-- ENDIF -->
 						</td>
 					</tr>
 				<!-- BEGINELSE -->
 					<tr class="empty-row">
-						<td colspan="4" class="row3" style="text-align: center;">{L_NO_BLOCKS}</td>
+						<td colspan="4" class="row3 vinny-sidebar-cell-center">{L_NO_BLOCKS}</td>
 					</tr>
 				<!-- END blocks_left -->
 				</tbody>
 			</table>
 		</div>
 
-		<div style="width: 49%;">
-			<h2>{L_BLOCK_SIDE_RIGHT}</h2>
+		<div class="vinny-sidebar-column">
+			<h2>{L_BLOCK_SIDE_RIGHT} <span class="vinny-sidebar-status-summary">({RIGHT_STATUS_SUMMARY})</span></h2>
 			<table class="table1 zebra-table">
 				<thead>
 					<tr>
 						<th>{L_BLOCK_NAME}</th>
-						<th style="text-align: center;">{L_BLOCK_MOVE_TO}</th>
-						<th style="text-align: center;">{L_BLOCK_ENABLED}</th>
+						<th class="vinny-sidebar-cell-center">{L_BLOCK_MOVE_TO}</th>
+						<th class="vinny-sidebar-cell-center">{L_BLOCK_ENABLED}</th>
 						<th>{L_ACTION}</th>
 					</tr>
 				</thead>
@@ -191,41 +247,41 @@
 				<!-- BEGIN blocks_right -->
 					<tr data-id="{blocks_right.ID}">
 						<td>
-							<i class="icon fa-arrows fa-fw drag-handle" style="cursor: move; color: #999;" title="{L_BLOCK_DRAG_DROP}"></i> 
+							<i class="icon fa-arrows fa-fw drag-handle vinny-sidebar-drag-handle" title="{L_BLOCK_DRAG_DROP}"></i> 
 							<strong>{blocks_right.NAME}</strong>
 						</td>
-						<td style="text-align: center;">
-							<a href="{blocks_right.U_TOGGLE_SIDE}" class="move-side-btn" style="text-decoration: none;" title="{L_BLOCK_MOVE_TO} {L_BLOCK_SIDE_LEFT}">
-								<i class="icon acp-icon fa-arrow-circle-left fa-fw" aria-hidden="true" style="color: #ff9900;"></i>
+						<td class="vinny-sidebar-cell-center">
+							<a href="{blocks_right.U_TOGGLE_SIDE}" class="move-side-btn vinny-sidebar-icon-link" title="{L_BLOCK_MOVE_TO} {L_BLOCK_SIDE_LEFT}">
+								<i class="icon acp-icon fa-arrow-circle-left fa-fw" style="color: #ff9900;" aria-hidden="true"></i>
 							</a>
 						</td>
-						<td style="text-align: center;">
-							<a href="{blocks_right.U_TOGGLE_ENABLED}" data-ajax="sidebar_toggle_enabled" style="text-decoration: none;">
+						<td class="vinny-sidebar-cell-center">
+							<a href="{blocks_right.U_TOGGLE_ENABLED}" data-ajax="sidebar_toggle_enabled" class="vinny-sidebar-icon-link">
 								<!-- IF blocks_right.ENABLED --><i class="icon acp-icon fa-check-circle fa-fw" style="color: #228822;" aria-hidden="true" title="{L_YES}"></i><!-- ELSE --><i class="icon acp-icon fa-times-circle fa-fw" style="color: #bcbcbc;" aria-hidden="true" title="{L_NO}"></i><!-- ENDIF -->
 							</a>
 						</td>
 						<td class="actions">
 							<!-- IF blocks_right.S_FIRST_ROW -->
-								<span class="move-up-icon" style="opacity: 0.3; pointer-events: none;">{ICON_MOVE_UP}</span>
+								<span class="move-up-icon vinny-sidebar-icon-disabled-arrow">{ICON_MOVE_UP}</span>
 							<!-- ELSE -->
-								<span class="move-up-icon"><a href="{blocks_right.U_MOVE_UP}" class="move-up-btn" style="text-decoration: none;">{ICON_MOVE_UP}</a></span>
+								<span class="move-up-icon"><a href="{blocks_right.U_MOVE_UP}" class="move-up-btn vinny-sidebar-icon-link">{ICON_MOVE_UP}</a></span>
 							<!-- ENDIF -->
 
 							<!-- IF blocks_right.S_LAST_ROW -->
-								<span class="move-down-icon" style="opacity: 0.3; pointer-events: none;">{ICON_MOVE_DOWN}</span>
+								<span class="move-down-icon vinny-sidebar-icon-disabled-arrow">{ICON_MOVE_DOWN}</span>
 							<!-- ELSE -->
-								<span class="move-down-icon"><a href="{blocks_right.U_MOVE_DOWN}" class="move-down-btn" style="text-decoration: none;">{ICON_MOVE_DOWN}</a></span>
+								<span class="move-down-icon"><a href="{blocks_right.U_MOVE_DOWN}" class="move-down-btn vinny-sidebar-icon-link">{ICON_MOVE_DOWN}</a></span>
 							<!-- ENDIF -->
 
 							<!-- IF not blocks_right.IS_SYSTEM -->
-							<a href="{blocks_right.U_EDIT}" style="text-decoration: none;">{ICON_EDIT}</a>
-							<a href="{blocks_right.U_DELETE}" data-ajax="row_delete" style="text-decoration: none;">{ICON_DELETE}</a>
+							<a href="{blocks_right.U_EDIT}" class="vinny-sidebar-icon-link">{ICON_EDIT}</a>
+							<a href="{blocks_right.U_DELETE}" data-ajax="row_delete" class="vinny-sidebar-icon-link">{ICON_DELETE}</a>
 							<!-- ENDIF -->
 						</td>
 					</tr>
 				<!-- BEGINELSE -->
 					<tr class="empty-row">
-						<td colspan="4" class="row3" style="text-align: center;">{L_NO_BLOCKS}</td>
+						<td colspan="4" class="row3 vinny-sidebar-cell-center">{L_NO_BLOCKS}</td>
 					</tr>
 				<!-- END blocks_right -->
 				</tbody>

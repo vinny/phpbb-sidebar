@@ -10,5 +10,6 @@ services:
             - '@dispatcher'
             - '%core.table_prefix%'
             - '%core.root_path%'
+            - '@cache.driver'
         tags:
             - { name: event.listener }
