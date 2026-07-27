@@ -28,6 +28,8 @@ $lang = array_merge($lang, [
 	'SIDEBAR_NEWEST_MEMBER_WELCOME'	=> 'Please welcome our newest member:',
 	'SIDEBAR_SEARCH'				=> 'Search',
 	'SIDEBAR_CLOCK'					=> 'Clock',
+	'SIDEBAR_CLOCK_AM'				=> 'AM',
+	'SIDEBAR_CLOCK_PM'				=> 'PM',
 	'SIDEBAR_CALENDAR'				=> 'Calendar',
 
 	'SIDEBAR_STATISTICS'			=> 'Forum Statistics',

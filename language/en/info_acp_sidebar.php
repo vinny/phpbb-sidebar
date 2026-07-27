@@ -25,6 +25,10 @@ $lang = array_merge($lang, [
 
 	'VINNY_SIDEBAR'					=> 'Sidebar Manager',
 	'VINNY_SIDEBAR_EXPLAIN'			=> 'Here you can manage the sidebars and their blocks. Note that system blocks cannot be deleted, as their content is generated dynamically by code logic.',
+	'VINNY_SIDEBAR_SUPPORT_STAR'	=> 'If you like this extension, please give it a star on <a href="https://github.com/vinny/phpbb-sidebar" target="_blank" rel="noopener"><i class="icon fa fa-github fa-fw" aria-hidden="true"></i>GitHub</a>.',
+	'VINNY_SIDEBAR_SUPPORT_DONATE'	=> 'If you find it useful, you can also support its development with an optional <a href="https://ko-fi.com/vinny1" target="_blank" rel="noopener"><i class="icon fa fa-heart fa-fw" aria-hidden="true"></i>donation</a>.',
+	'VINNY_SIDEBAR_BLOCK_REQUESTS'	=> 'Looking to add new features? You can request a custom sidebar block in the <a href="https://www.phpbb.com/customise/db/extension/sidebar/support/topic/255892" target="_blank" rel="noopener"><i class="icon fa fa-comments fa-fw" aria-hidden="true"></i>Block Requests</a> topic.',
+	'VINNY_SIDEBAR_BLOCK_DOWNLOADS'	=> 'Want more widgets? Browse and download additional block extensions from the <a href="https://www.phpbb.com/customise/db/extension/sidebar/support/topic/255895" target="_blank" rel="noopener"><i class="icon fa fa-download fa-fw" aria-hidden="true"></i>Block Downloads</a> topic.',
 
 	// Settings
 	'VINNY_SIDEBAR_ENABLE'			=> 'Enable Sidebar functionality',
