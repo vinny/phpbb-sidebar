@@ -1,11 +1,11 @@
 <ul class="vinny-sidebar-list">
-	<!-- BEGIN sidebar_recent_posts -->
+	{% for post in loops.sidebar_recent_posts %}
 	<li class="vinny-sidebar-list-item">
-		<a href="{sidebar_recent_posts.U_POST}" class="vinny-sidebar-list-link">{sidebar_recent_posts.POST_SUBJECT}</a>
+		<a href="{{ post.U_POST }}" class="vinny-sidebar-list-link">{{ post.POST_SUBJECT }}</a>
 		<span class="vinny-sidebar-list-meta">
-			{L_SIDEBAR_BY} {sidebar_recent_posts.USERNAME_FULL}<br />
-			{sidebar_recent_posts.TIME}
+			{{ lang('SIDEBAR_BY') }} {{ post.USERNAME_FULL|raw }}<br />
+			{{ post.TIME }}
 		</span>
 	</li>
-	<!-- END sidebar_recent_posts -->
+	{% endfor %}
 </ul>

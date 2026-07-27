@@ -390,7 +390,7 @@ class sidebar_module
 				{
 					$icon_class = ($new_status) ? 'fa-check-circle' : 'fa-times-circle';
 					$icon_color = ($new_status) ? '#228822' : '#bcbcbc';
-					$title      = ($new_status) ? $language->lang('YES') : $language->lang('NO');
+					$title      = ($new_status) ? $language->lang('ENABLED') : $language->lang('DISABLED');
 
 					$json_response = new \phpbb\json_response;
 					$json_response->send(['success' => true, 'icon_class' => $icon_class, 'icon_color' => $icon_color, 'title' => $title]);

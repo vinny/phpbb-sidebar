@@ -7,7 +7,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-	var clockFormat = '{SIDEBAR_CLOCK_FORMAT}'; // '24' or '12'
+	var clockFormat = '{{ SIDEBAR_CLOCK_FORMAT }}'; // '24' or '12'
 	var timeElement = document.getElementById('vinny-clock-time');
 	var ampmElement = document.getElementById('vinny-clock-ampm');
 
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		var ampm = '';
 
 		if (clockFormat === '12') {
-			ampm = hours >= 12 ? '{LA_SIDEBAR_CLOCK_PM}' : '{LA_SIDEBAR_CLOCK_AM}';
+			ampm = hours >= 12 ? "{{ lang('SIDEBAR_CLOCK_PM')|e('js') }}" : "{{ lang('SIDEBAR_CLOCK_AM')|e('js') }}";
 			hours = hours % 12;
 			hours = hours ? hours : 12; // the hour '0' should be '12'
 			ampmElement.textContent = ampm;

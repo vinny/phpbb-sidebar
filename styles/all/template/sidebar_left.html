@@ -1,14 +1,14 @@
-<!-- BEGIN vinny_sidebar_left_blocks -->
+{% for block in loops.vinny_sidebar_left_blocks %}
 	<div class="vinny-sidebar-block">
 		<div class="vinny-sidebar-block-header">
-			{vinny_sidebar_left_blocks.TITLE}
+			{{ block.TITLE }}
 		</div>
 		<div class="vinny-sidebar-block-content">
-			<!-- IF vinny_sidebar_left_blocks.TEMPLATE_FILE -->
-				<!-- INCLUDE {vinny_sidebar_left_blocks.TEMPLATE_FILE} -->
-			<!-- ELSE -->
-				{vinny_sidebar_left_blocks.CONTENT}
-			<!-- ENDIF -->
+			{% if block.TEMPLATE_FILE %}
+				{% INCLUDE block.TEMPLATE_FILE %}
+			{% else %}
+				{{ block.CONTENT|raw }}
+			{% endif %}
 		</div>
 	</div>
-<!-- END vinny_sidebar_left_blocks -->
+{% endfor %}

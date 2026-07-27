@@ -1,4 +1,4 @@
-<!-- IF S_VINNY_SIDEBAR_LEFT_ENABLED or S_VINNY_SIDEBAR_RIGHT_ENABLED -->
+{% if S_VINNY_SIDEBAR_LEFT_ENABLED or S_VINNY_SIDEBAR_RIGHT_ENABLED %}
 <script>
 	(function() {
 		var html = document.documentElement;
@@ -13,5 +13,5 @@
 		}
 	}());
 </script>
-<!-- INCLUDECSS @vinny_sidebar/sidebar.css -->
-<!-- ENDIF -->
+{% INCLUDECSS '@vinny_sidebar/sidebar.css' %}
+{% endif %}
