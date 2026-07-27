@@ -72,4 +72,9 @@ phpbb.addAjaxCallback('sidebar_toggle_enabled', function(res) {
 		.css('color', res.icon_color)
 		.attr('title', res.title)
 		.attr('data-original-title', res.title);
+
+	if (res.status_summary) {
+		var $column = $el.closest('.vinny-sidebar-column');
+		$column.find('.vinny-sidebar-status-summary').text('(' + res.status_summary + ')');
+	}
 });

@@ -375,25 +375,47 @@ class sidebar_module
 					trigger_error($language->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
 				}
 
-				$sql = 'SELECT block_enabled FROM ' . $blocks_table . ' WHERE block_id = ' . (int) $block_id;
+				$sql = 'SELECT block_enabled, sidebar_side FROM ' . $blocks_table . ' WHERE block_id = ' . (int) $block_id;
 				$result = $db->sql_query($sql);
-				$current_status = (int) $db->sql_fetchfield('block_enabled');
+				$row = $db->sql_fetchrow($result);
 				$db->sql_freeresult($result);
 
-				$new_status = ($current_status) ? 0 : 1;
-
-				$sql = 'UPDATE ' . $blocks_table . ' SET block_enabled = ' . $new_status . ' WHERE block_id = ' . (int) $block_id;
-				$db->sql_query($sql);
-				$this->purge_sidebar_cache();
-
-				if ($request->is_ajax())
+				if ($row)
 				{
-					$icon_class = ($new_status) ? 'fa-check-circle' : 'fa-times-circle';
-					$icon_color = ($new_status) ? '#228822' : '#bcbcbc';
-					$title      = ($new_status) ? $language->lang('ENABLED') : $language->lang('DISABLED');
+					$current_status = (int) $row['block_enabled'];
+					$side           = $row['sidebar_side'];
+					$new_status     = ($current_status) ? 0 : 1;
 
-					$json_response = new \phpbb\json_response;
-					$json_response->send(['success' => true, 'icon_class' => $icon_class, 'icon_color' => $icon_color, 'title' => $title]);
+					$sql = 'UPDATE ' . $blocks_table . ' SET block_enabled = ' . $new_status . ' WHERE block_id = ' . (int) $block_id;
+					$db->sql_query($sql);
+					$this->purge_sidebar_cache();
+
+					if ($request->is_ajax())
+					{
+						$icon_class = ($new_status) ? 'fa-check-circle' : 'fa-times-circle';
+						$icon_color = ($new_status) ? '#228822' : '#bcbcbc';
+						$title      = ($new_status) ? $language->lang('ENABLED') : $language->lang('DISABLED');
+
+						$sql = 'SELECT block_enabled FROM ' . $blocks_table . " WHERE sidebar_side = '" . $db->sql_escape($side) . "'";
+						$result = $db->sql_query($sql);
+						$active = $disabled = 0;
+						while ($r = $db->sql_fetchrow($result))
+						{
+							$r['block_enabled'] ? $active++ : $disabled++;
+						}
+						$db->sql_freeresult($result);
+
+						$status_summary = $language->lang('BLOCKS_STATUS_SUMMARY', $active, $disabled);
+
+						$json_response = new \phpbb\json_response;
+						$json_response->send([
+							'success'        => true,
+							'icon_class'     => $icon_class,
+							'icon_color'     => $icon_color,
+							'title'          => $title,
+							'status_summary' => $status_summary,
+						]);
+					}
 				}
 				redirect($this->u_action);
 			}
