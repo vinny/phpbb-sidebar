@@ -181,8 +181,19 @@ class sidebar_module
 					{
 						$storage_content = $original_content;
 						$uid = $bitfield = '';
-						$flags = 7; // BBCODE | SMILIES | URLS
-						generate_text_for_storage($storage_content, $uid, $bitfield, $flags, true, true, true);
+
+						// Build options bitmask from forum configuration
+						$allow_bbcode	= (bool) $config['allow_bbcode'];
+						$allow_smilies	= (bool) $config['allow_smilies'];
+						$allow_urls		= (bool) $config['allow_post_links'];
+						$allow_img		= (bool) $config['allow_post_images'];
+
+						$flags = 0;
+						if ($allow_bbcode)  { $flags |= OPTION_FLAG_BBCODE; }
+						if ($allow_smilies) { $flags |= OPTION_FLAG_SMILIES; }
+						if ($allow_urls)    { $flags |= OPTION_FLAG_LINKS; }
+
+						generate_text_for_storage($storage_content, $uid, $bitfield, $flags, $allow_bbcode, $allow_smilies, $allow_urls);
 
 						$block_data = [
 							'block_name'			=> $request->variable('block_name', '', true),
@@ -240,7 +251,7 @@ class sidebar_module
 					{
 						if ($block_data['block_parse_bbcode'])
 						{
-							$block_preview = generate_text_for_display($storage_content, $uid, $bitfield, $flags);
+							$block_preview = generate_text_for_display($storage_content, $uid, $bitfield, $flags, $allow_img);
 						}
 						else
 						{
@@ -294,17 +305,17 @@ class sidebar_module
 					'S_BLOCK_ANALYSIS'			=> !empty($analysis_results),
 					'U_BACK'					=> $this->u_action,
 
-					'BBCODE_STATUS'				=> $language->lang('BBCODE_IS_ON', '<a href="' . $controller_helper->route('phpbb_help_bbcode_controller') . '">', '</a>'),
-					'SMILIES_STATUS'			=> $language->lang('SMILIES_ARE_ON'),
-					'IMG_STATUS'				=> $language->lang('IMAGES_ARE_ON'),
-					'FLASH_STATUS'				=> $language->lang('FLASH_IS_ON'),
-					'URL_STATUS'				=> $language->lang('URL_IS_ON'),
+					'BBCODE_STATUS'				=> ($config['allow_bbcode']) ? $language->lang('BBCODE_IS_ON', '<a href="' . $controller_helper->route('phpbb_help_bbcode_controller') . '">', '</a>') : $language->lang('BBCODE_IS_OFF', '<a href="' . $controller_helper->route('phpbb_help_bbcode_controller') . '">', '</a>'),
+					'SMILIES_STATUS'			=> ($config['allow_smilies']) ? $language->lang('SMILIES_ARE_ON') : $language->lang('SMILIES_ARE_OFF'),
+					'IMG_STATUS'				=> ($config['allow_post_images']) ? $language->lang('IMAGES_ARE_ON') : $language->lang('IMAGES_ARE_OFF'),
+					'FLASH_STATUS'				=> ($config['allow_post_flash']) ? $language->lang('FLASH_IS_ON') : $language->lang('FLASH_IS_OFF'),
+					'URL_STATUS'				=> ($config['allow_post_links']) ? $language->lang('URL_IS_ON') : $language->lang('URL_IS_OFF'),
 
-					'S_BBCODE_ALLOWED'			=> true,
-					'S_SMILIES_ALLOWED'			=> true,
-					'S_BBCODE_IMG'				=> true,
-					'S_BBCODE_FLASH'			=> true,
-					'S_LINKS_ALLOWED'			=> true,
+					'S_BBCODE_ALLOWED'			=> (bool) $config['allow_bbcode'],
+					'S_SMILIES_ALLOWED'			=> (bool) $config['allow_smilies'],
+					'S_BBCODE_IMG'				=> (bool) $config['allow_post_images'],
+					'S_BBCODE_FLASH'			=> (bool) $config['allow_post_flash'],
+					'S_LINKS_ALLOWED'			=> (bool) $config['allow_post_links'],
 				]);
 
 				display_custom_bbcodes();
