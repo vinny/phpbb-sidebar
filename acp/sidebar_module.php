@@ -189,9 +189,18 @@ class sidebar_module
 						$allow_img		= (bool) $config['allow_post_images'];
 
 						$flags = 0;
-						if ($allow_bbcode)  { $flags |= OPTION_FLAG_BBCODE; }
-						if ($allow_smilies) { $flags |= OPTION_FLAG_SMILIES; }
-						if ($allow_urls)    { $flags |= OPTION_FLAG_LINKS; }
+						if ($allow_bbcode)
+						{
+							$flags |= OPTION_FLAG_BBCODE;
+						}
+						if ($allow_smilies)
+						{
+							$flags |= OPTION_FLAG_SMILIES;
+						}
+						if ($allow_urls)
+						{
+							$flags |= OPTION_FLAG_LINKS;
+						}
 
 						generate_text_for_storage($storage_content, $uid, $bitfield, $flags, $allow_bbcode, $allow_smilies, $allow_urls);
 
