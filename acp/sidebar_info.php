@@ -20,12 +20,12 @@ class sidebar_info
 			'modes'		=> [
 				'settings'	=> [
 					'title'	=> 'ACP_VINNY_SIDEBAR_SETTINGS',
-					'auth'	=> 'ext_vinny/sidebar',
+					'auth'	=> 'ext_vinny/sidebar && acl_a_board',
 					'cat'	=> ['ACP_VINNY_SIDEBAR']
 				],
 				'blocks'	=> [
 					'title'	=> 'ACP_VINNY_SIDEBAR_BLOCKS',
-					'auth'	=> 'ext_vinny/sidebar',
+					'auth'	=> 'ext_vinny/sidebar && acl_a_board',
 					'cat'	=> ['ACP_VINNY_SIDEBAR']
 				],
 			],
