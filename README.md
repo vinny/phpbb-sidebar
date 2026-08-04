@@ -1,28 +1,31 @@
 # Sidebar Manager for phpBB [![Build Status](https://github.com/vinny/phpbb-sidebar/workflows/Tests/badge.svg)](https://github.com/vinny/phpbb-sidebar/actions)
 
-## Extension Description
-A flexible sidebar management system for phpBB forums. It allows administrators to add, organize, and customise widgets on both the left and right sides of the board.
+Sidebar Manager for phpBB adds a flexible way to manage sidebars across your forum. It lets administrators create, organize, and position widgets on the left or right side of the board.
 
 ## Features
 
-- **Dual Sidebars:** Independent left and right sidebar layout support.
-- **Drag & Drop ACP:** Intuitive Admin Control Panel interface to easily reorder and move blocks between layout columns.
-- **Responsive & Native:** Automatically hides on mobile devices and features a seamless Flexbox integration that perfectly adapts to any desktop screen resolution.
-- **Toggleable Sidebars:** Users can manually collapse or expand sidebars for a distraction-free reading experience (user preference is saved via cookies).
-- **Custom HTML & BBCode Blocks:** Create your own unlimited personalized widgets using custom HTML or BBCode.
-- **Built-in System Blocks:** Comes ready out-of-the-box with useful widgets like Welcome Panel, Forum Statistics, Quick Search, Clock, Calendar, Newest Member, and Recent Topics/Posts.
-- **Page Exclusion Rules:** Choose specific pages where the sidebars should be hidden.
-- **Granular Control:** Quickly enable, disable, or delete individual blocks directly from the admin panel with a single click.
+- **Dual sidebars:** Support for independent left and right sidebar layouts.
+- **Drag-and-drop ACP:** Reorder blocks and move them between columns from the Admin Control Panel.
+- **Responsive layout:** Automatically adapts to desktop screens and hides sidebars on mobile devices.
+- **Toggleable sidebars:** Let users collapse or expand sidebars for a cleaner reading experience. User preference is stored via cookies.
+- **Custom HTML and BBCode blocks:** Create your own widgets using HTML or BBCode.
+- **Built-in system blocks:** Includes useful blocks such as Welcome Panel, Forum Statistics, Quick Search, Clock, Calendar, Newest Member, and Recent Topics/Posts.
+- **Page exclusion rules:** Choose which pages should not display sidebars.
+- **Quick controls:** Enable, disable, or delete blocks directly from the admin panel.
 
-## Dynamic Block Extensions
+## Why Sidebar Manager exists
 
-Sidebar Manager can also be extended by child extensions.
+Sidebar Manager was built for phpBB forums that need a cleaner way to add useful content without complicating the layout. It gives administrators full control over sidebars, widgets, and visibility, while keeping the forum easy to use and easy to maintain.
 
-The recommended base for creating PHP-driven sidebar blocks is:
+## Dynamic block extensions
+
+Sidebar Manager can also be extended with child extensions.
+
+For PHP-driven sidebar blocks, the recommended base is:
 
 - [`vinny/sidebarblock_skeleton`](https://github.com/vinny/phpbb-sidebarblock-skeleton)
 
-Use the skeleton when a block needs to read data from phpBB, another extension, or custom PHP logic. Examples include birthdays, groups, polls, banned users, mChat data, Quick Style data, or any other dynamic forum content.
+Use the skeleton when a block needs to read data from phpBB, another extension, or custom PHP logic. Typical examples include birthdays, groups, polls, banned users, mChat data, Quick Style data, or any other dynamic forum content.
 
 Sidebar Manager remains responsible for:
 
@@ -41,7 +44,7 @@ The child extension is responsible for:
 - assigning template variables;
 - providing the block-specific template and CSS.
 
-Child extensions integrate through the `vinny.sidebar.render_block` event. This keeps Sidebar Manager stable while allowing new blocks to be distributed as separate extensions.
+Child extensions integrate through the `vinny.sidebar.render_block` event. This keeps Sidebar Manager stable while still allowing new blocks to be distributed separately.
 
 ## Support
 
