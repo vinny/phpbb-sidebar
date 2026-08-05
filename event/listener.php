@@ -226,7 +226,7 @@ class listener implements EventSubscriberInterface
 					$bbcode_uid = $row['bbcode_uid'] ?? '';
 					$bbcode_bitfield = $row['bbcode_bitfield'] ?? '';
 					$bbcode_options = isset($row['bbcode_options']) ? (int) $row['bbcode_options'] : OPTION_FLAG_BBCODE | OPTION_FLAG_SMILIES | OPTION_FLAG_LINKS;
-					$content = \generate_text_for_display($row['block_content'], $bbcode_uid, $bbcode_bitfield, $bbcode_options, (bool) $this->config['allow_post_images']);
+					$content = \generate_text_for_display($row['block_content'], $bbcode_uid, $bbcode_bitfield, $bbcode_options);
 				}
 				else
 				{
