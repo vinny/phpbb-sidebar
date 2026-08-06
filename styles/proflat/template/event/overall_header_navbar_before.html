@@ -1,0 +1,16 @@
+{% if S_VINNY_SIDEBAR_LEFT_ENABLED or S_VINNY_SIDEBAR_RIGHT_ENABLED %}
+<div class="vinny-sidebar-container{% if S_VINNY_SIDEBAR_LEFT_ENABLED and S_VINNY_SIDEBAR_RIGHT_ENABLED %} vinny-sidebar-both{% elseif S_VINNY_SIDEBAR_LEFT_ENABLED %} vinny-sidebar-left-only{% else %} vinny-sidebar-right-only{% endif %}">
+	{% if S_VINNY_SIDEBAR_LEFT_ENABLED %}
+	<aside id="vinny-sidebar-left" class="vinny-sidebar vinny-sidebar-left" role="complementary">
+		{% if not S_VINNY_SIDEBAR_HIDE_TOGGLES %}
+		<button class="vinny-sidebar-toggle" data-side="left" type="button" aria-label="{{ lang('SIDEBAR_TOGGLE') }}" title="{{ lang('SIDEBAR_TOGGLE') }}" aria-expanded="true">
+			<i class="icon fa fa-chevron-left fa-fw" aria-hidden="true"></i>
+		</button>
+		{% endif %}
+		<div class="vinny-sidebar-inner">
+			{% INCLUDE '@vinny_sidebar/sidebar_left.html' %}
+		</div>
+	</aside>
+	{% endif %}
+	<main class="vinny-sidebar-content" role="main">
+{% endif %}

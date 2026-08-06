@@ -1,0 +1,73 @@
+/* Sidebar adjustments specifically for proflat style */
+
+/* Move sidebars closer to the top to align flush with category headers */
+body.proflat .vinny-sidebar {
+	margin-top: 0;
+}
+
+/* Ensure center content column never overflows into sidebars */
+body.proflat .vinny-sidebar-content {
+	display: block;
+	flex: 1 1 auto;
+	min-width: 0;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+/* Prevent action-bar, search-box, or topic lists from overflowing horizontally in viewforum/viewtopic */
+body.proflat .vinny-sidebar-content .action-bar,
+body.proflat .vinny-sidebar-content .forabg,
+body.proflat .vinny-sidebar-content .forumbg,
+body.proflat .vinny-sidebar-content .panel,
+body.proflat .vinny-sidebar-content .post {
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+body.proflat .vinny-sidebar-content .action-bar::after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+@media (min-width: 1600px) {
+	/* Position sidebars in outer whitespace margins without shrinking center content */
+	body.proflat .vinny-sidebar-container.vinny-sidebar-both {
+		width: calc(100% + 430px);
+		margin-left: -215px;
+		max-width: none;
+	}
+
+	body.proflat .vinny-sidebar-container.vinny-sidebar-left-only {
+		width: calc(100% + 215px);
+		margin-left: -215px;
+		max-width: none;
+	}
+
+	body.proflat .vinny-sidebar-container.vinny-sidebar-right-only {
+		width: calc(100% + 215px);
+		margin-left: 0;
+		max-width: none;
+	}
+
+	/* Account for toggled off sidebars */
+	html.vinny-sidebar-left-hidden body.proflat .vinny-sidebar-container.vinny-sidebar-both {
+		width: calc(100% + 215px);
+		margin-left: 0;
+	}
+
+	html.vinny-sidebar-right-hidden body.proflat .vinny-sidebar-container.vinny-sidebar-both {
+		width: calc(100% + 215px);
+		margin-left: -215px;
+	}
+
+	html.vinny-sidebar-left-hidden.vinny-sidebar-right-hidden body.proflat .vinny-sidebar-container {
+		width: 100%;
+		margin-left: 0;
+	}
+}
+
+body.proflat .vinny-sidebar-container {
+	padding-left: 0;
+	padding-right: 0;
+}
