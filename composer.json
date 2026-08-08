@@ -3,7 +3,7 @@
 	"type": "phpbb-extension",
 	"description": "Sidebar Manager for phpBB. Adds customizable sidebars to the forum.",
 	"homepage": "https://github.com/vinny/phpbb-sidebar",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"keywords": ["phpbb", "extension", "add-on", "sidebar"],
 	"license": "GPL-2.0-only",
 	"authors": [

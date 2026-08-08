@@ -1,0 +1,42 @@
+/* Sidebar adjustments specifically for prosilver_se style */
+
+/* Allow sidebar container to wrap so copyright moves to row 2 below the sidebars */
+.vinny-sidebar-container {
+	flex-wrap: wrap !important;
+}
+
+/* Force copyright to wrap to full width on row 2 */
+.copyright {
+	flex: 0 0 100% !important;
+	width: 100% !important;
+	order: 10 !important;
+	text-align: center !important;
+	margin-top: 15px !important;
+}
+
+/* Block headers gradient - matching prosilver_se headerbar */
+.vinny-sidebar-block-header {
+	background-color: #7c8891 !important;
+	background-image: linear-gradient(to bottom, #6e777f 0%, #505c65 1%, #56626b 20%, #737f88 75%, #7c8891 100%) !important;
+	background-repeat: repeat-x !important;
+	color: #fff !important;
+	text-shadow: 1px 1px 1px #333 !important;
+	border-bottom: 1px solid #48525a !important;
+}
+
+/* Toggle buttons matching prosilver_se headerbar */
+.vinny-sidebar-toggle {
+	background-color: #6e777f !important;
+	background-image: linear-gradient(to bottom, #6e777f 0%, #505c65 50%, #7c8891 100%) !important;
+	color: #fff !important;
+}
+
+.vinny-sidebar-toggle:hover {
+	background-color: #505c65 !important;
+	background-image: linear-gradient(to bottom, #505c65 0%, #3d464d 100%) !important;
+}
+
+/* Block borders */
+.vinny-sidebar-block {
+	border-color: #a9b5bd !important;
+}

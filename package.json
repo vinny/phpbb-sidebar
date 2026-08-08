@@ -7,8 +7,8 @@
   "scripts": {
     "lint:js": "eslint \"adm/style/js/**/*.js\" \"adm/style/*.html\" \"styles/all/template/**/*.html\"",
     "lint:js:fix": "eslint \"adm/style/js/**/*.js\" \"adm/style/*.html\" \"styles/all/template/**/*.html\" --fix",
-    "lint:css": "stylelint \"adm/style/css/*.css\" \"styles/all/theme/*.css\"",
-    "lint:css:fix": "stylelint \"adm/style/css/*.css\" \"styles/all/theme/*.css\" --fix",
+    "lint:css": "stylelint \"adm/style/css/*.css\" \"styles/all/theme/*.css\" \"styles/proflat/theme/*.css\" \"styles/prosilver_se/theme/*.css\"",
+    "lint:css:fix": "stylelint \"adm/style/css/*.css\" \"styles/all/theme/*.css\" \"styles/proflat/theme/*.css\" \"styles/prosilver_se/theme/*.css\" --fix",
     "lint": "npm run lint:js && npm run lint:css",
     "test:php": "php vendor/phpunit/phpunit/phpunit",
     "test": "npm run lint && npm run test:php"
