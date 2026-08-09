@@ -1,0 +1,40 @@
+/* Sidebar adjustments specifically for SE_Gamer style */
+
+/* Allow sidebar container to wrap so copyright moves to row 2 below the sidebars */
+.vinny-sidebar-container {
+	flex-wrap: wrap !important;
+}
+
+/* Force copyright to wrap to full width on row 2 */
+.copyright {
+	flex: 0 0 100% !important;
+	width: 100% !important;
+	order: 10 !important;
+	text-align: center !important;
+	margin-top: 15px !important;
+}
+
+/* Block headers gradient - matching SE_Gamer dark theme */
+.vinny-sidebar-block-header {
+	background-color: #141414 !important;
+	background-image: linear-gradient(to bottom, #2b2b2b 0%, #141414 100%) !important;
+	color: #fff !important;
+	font-family: Oswald, Arial, Helvetica, sans-serif !important;
+	text-transform: uppercase !important;
+	border-bottom: 1px solid #ff992c !important;
+}
+
+/* Toggle buttons matching SE_Gamer orange accent */
+.vinny-sidebar-toggle {
+	background-color: #ff992c !important;
+	color: #fff !important;
+}
+
+.vinny-sidebar-toggle:hover {
+	background-color: #e6851f !important;
+}
+
+/* Block borders */
+.vinny-sidebar-block {
+	border-color: #333 !important;
+}
