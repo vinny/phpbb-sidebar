@@ -1,38 +1,7 @@
-<div class="vinny-sidebar-clock-container">
+<div class="vinny-sidebar-clock-container" data-clock-format="{{ SIDEBAR_CLOCK_FORMAT }}" data-am="{{ lang('SIDEBAR_CLOCK_AM')|e('html_attr') }}" data-pm="{{ lang('SIDEBAR_CLOCK_PM')|e('html_attr') }}">
 	<div id="vinny-sidebar-clock" class="vinny-sidebar-clock-display">
 		<span id="vinny-clock-time">00:00:00</span>
 		<span id="vinny-clock-ampm" class="vinny-sidebar-clock-ampm"></span>
 	</div>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-	var clockFormat = '{{ SIDEBAR_CLOCK_FORMAT }}'; // '24' or '12'
-	var timeElement = document.getElementById('vinny-clock-time');
-	var ampmElement = document.getElementById('vinny-clock-ampm');
-
-	function updateClock() {
-		var now = new Date();
-		var hours = now.getHours();
-		var minutes = String(now.getMinutes()).padStart(2, '0');
-		var seconds = String(now.getSeconds()).padStart(2, '0');
-		var ampm = '';
-
-		if (clockFormat === '12') {
-			ampm = hours >= 12 ? "{{ lang('SIDEBAR_CLOCK_PM')|e('js') }}" : "{{ lang('SIDEBAR_CLOCK_AM')|e('js') }}";
-			hours = hours % 12;
-			hours = hours ? hours : 12; // the hour '0' should be '12'
-			ampmElement.textContent = ampm;
-			ampmElement.style.display = 'inline-block';
-		} else {
-			ampmElement.style.display = 'none';
-		}
-
-		hours = String(hours).padStart(2, '0');
-		timeElement.textContent = hours + ':' + minutes + ':' + seconds;
-	}
-
-	setInterval(updateClock, 1000);
-	updateClock(); // initial call
-});
-</script>
+{% INCLUDEJS '@vinny_sidebar/js/sidebar_clock.js' %}

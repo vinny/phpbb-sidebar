@@ -23,7 +23,6 @@ $lang = array_merge($lang, [
 	'ACP_VINNY_SIDEBAR_SETTINGS'	=> 'Settings',
 	'ACP_VINNY_SIDEBAR_BLOCKS'		=> 'Manage Blocks',
 
-	'VINNY_SIDEBAR'					=> 'Sidebar Manager',
 	'VINNY_SIDEBAR_EXPLAIN'			=> 'Here you can manage the sidebars and their blocks. Note that system blocks cannot be deleted, as their content is generated dynamically by code logic.',
 	'VINNY_SIDEBAR_SUPPORT_STAR'	=> 'If you like this extension, please give it a star on <a href="https://github.com/vinny/phpbb-sidebar" target="_blank" rel="noopener"><i class="icon fa fa-github fa-fw" aria-hidden="true"></i>GitHub</a>.',
 	'VINNY_SIDEBAR_SUPPORT_DONATE'	=> 'If you find it useful, you can also support its development with an optional <a href="https://ko-fi.com/vinny1" target="_blank" rel="noopener"><i class="icon fa fa-heart fa-fw" aria-hidden="true"></i>donation</a>.',
@@ -55,7 +54,6 @@ $lang = array_merge($lang, [
 	'ACP_VINNY_SIDEBAR_BLOCK_EDIT'	=> 'Edit Block',
 	'BLOCK_NAME'					=> 'Block Name',
 	'PARSE_BBCODE'					=> 'Parse BBCode',
-	'PARSE_BBCODE_EXPLAIN'			=> 'If enabled, BBCode formatting, smilies, and URLs will be parsed for this block. If disabled, raw trusted HTML code is rendered directly.',
 	'BLOCK_SIDE'					=> 'Sidebar Side',
 	'BLOCK_SIDE_LEFT'				=> 'Left Sidebar',
 	'BLOCK_SIDE_RIGHT'				=> 'Right Sidebar',

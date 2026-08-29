@@ -30,7 +30,7 @@ body.proflat .vinny-sidebar-content .action-bar::after {
 	clear: both;
 }
 
-@media (width >= 1600px) {
+@media (min-width: 1600px) {
 	/* Position sidebars in outer whitespace margins without shrinking center content */
 	body.proflat .vinny-sidebar-container.vinny-sidebar-both {
 		width: calc(100% + 430px);

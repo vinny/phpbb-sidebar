@@ -170,13 +170,10 @@ function toggleBbcodePanel(isBbcode) {
 	</form>
 
 {% else %}
-	<form id="acp_sidebar_add" method="post" action="{{ U_ACTION }}">
-		<fieldset class="quick">
-			<input class="button2" type="submit" name="add" value="{{ lang('ACP_VINNY_SIDEBAR_BLOCK_ADD') }}" />&nbsp;
-			<a href="{{ U_PURGE_CACHE }}"><input class="button2" type="button" value="{{ lang('PURGE_SIDEBAR_CACHE') }}" /></a>
-			{{ S_FORM_TOKEN }}
-		</fieldset>
-	</form>
+	<fieldset class="quick">
+		<a href="{{ U_ADD_BLOCK }}" class="button2">{{ lang('ACP_VINNY_SIDEBAR_BLOCK_ADD') }}</a>
+		<a href="{{ U_PURGE_CACHE }}" class="button2">{{ lang('PURGE_SIDEBAR_CACHE') }}</a>
+	</fieldset>
 
 	<div class="vinny-sidebar-columns-container">
 

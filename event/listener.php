@@ -284,9 +284,9 @@ class listener implements EventSubscriberInterface
 			FROM ' . TOPICS_TABLE . ' t
 			LEFT JOIN ' . USERS_TABLE . ' u ON (t.topic_poster = u.user_id)
 			WHERE ' . $this->db->sql_in_set('t.forum_id', $forum_ary) . '
-				AND t.topic_visibility = 1
+				AND t.topic_visibility = ' . ITEM_APPROVED . '
 			ORDER BY t.topic_time DESC';
-		$result = $this->db->sql_query_limit($sql, 5, 0, 300);
+		$result = $this->db->sql_query_limit($sql, 5);
 
 		while ($row = $this->db->sql_fetchrow($result))
 		{
@@ -316,9 +316,9 @@ class listener implements EventSubscriberInterface
 			FROM ' . POSTS_TABLE . ' p
 			LEFT JOIN ' . USERS_TABLE . ' u ON (p.poster_id = u.user_id)
 			WHERE ' . $this->db->sql_in_set('p.forum_id', $forum_ary) . '
-				AND p.post_visibility = 1
+				AND p.post_visibility = ' . ITEM_APPROVED . '
 			ORDER BY p.post_time DESC';
-		$result = $this->db->sql_query_limit($sql, 5, 0, 300);
+		$result = $this->db->sql_query_limit($sql, 5);
 
 		while ($row = $this->db->sql_fetchrow($result))
 		{

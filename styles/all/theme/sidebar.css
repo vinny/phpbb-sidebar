@@ -90,7 +90,7 @@
 	margin-right: 0 !important;
 }
 
-@media (width <= 850px) {
+@media (max-width: 1100px) {
 	.vinny-sidebar-container {
 		display: block;
 		padding: 0;

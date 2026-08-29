@@ -2,6 +2,14 @@
 	float: right;
 }
 
+fieldset.quick a.button1,
+fieldset.quick a.button2 {
+	display: inline-block;
+	vertical-align: middle;
+	text-decoration: none;
+	margin-left: 5px;
+}
+
 .vinny-sidebar-bbcode-row {
 	margin-top: 10px;
 }

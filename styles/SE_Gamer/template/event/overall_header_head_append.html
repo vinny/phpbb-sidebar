@@ -1,18 +1,20 @@
 {% if S_VINNY_SIDEBAR_LEFT_ENABLED or S_VINNY_SIDEBAR_RIGHT_ENABLED %}
-<script>
-	(function() {
-		var html = document.documentElement;
-		var cookies = '; ' + document.cookie;
-
-		if (cookies.indexOf('; vinny_sidebar_left_hidden=1') !== -1) {
-			html.className += ' vinny-sidebar-left-hidden';
-		}
-
-		if (cookies.indexOf('; vinny_sidebar_right_hidden=1') !== -1) {
-			html.className += ' vinny-sidebar-right-hidden';
-		}
-	}());
-</script>
 {% INCLUDECSS '@vinny_sidebar/sidebar.css' %}
 {% INCLUDECSS '@vinny_sidebar/sidebar_SE_Gamer.css' %}
+<script>
+// Pre-render initialization: immediately restore collapsed state before <body> renders to prevent layout shift (FOUC).
+(function() {
+	try {
+		var p = window.location.pathname.replace(/\/[^/]*$/, '');
+		if (localStorage.getItem('phpbb_sidebar_' + p + '_left') === '1') {
+			document.documentElement.classList.add('vinny-sidebar-left-hidden');
+		}
+		if (localStorage.getItem('phpbb_sidebar_' + p + '_right') === '1') {
+			document.documentElement.classList.add('vinny-sidebar-right-hidden');
+		}
+	} catch {
+		// Storage unavailable or disabled
+	}
+})();
+</script>
 {% endif %}

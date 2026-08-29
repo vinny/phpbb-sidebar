@@ -24,7 +24,6 @@ $lang = array_merge($lang, [
 	'ACP_VINNY_SIDEBAR_SETTINGS'	=> 'Einstellungen',
 	'ACP_VINNY_SIDEBAR_BLOCKS'		=> 'Blöcke verwalten',
 
-	'VINNY_SIDEBAR'					=> 'Sidebar-Manager',
 	'VINNY_SIDEBAR_EXPLAIN'			=> 'Hier kannst du die Sidebars und deren Blöcke verwalten. Beachte, dass Systemblöcke nicht gelöscht werden können, da deren Inhalt dynamisch durch die Codelogik erzeugt wird.',
 	'VINNY_SIDEBAR_SUPPORT_STAR'	=> 'Wenn dir diese Erweiterung gefällt, gib ihr bitte einen Stern auf <a href="https://github.com/vinny/phpbb-sidebar" target="_blank" rel="noopener"><i class="icon fa fa-github fa-fw" aria-hidden="true"></i>GitHub</a>.',
 	'VINNY_SIDEBAR_SUPPORT_DONATE'	=> 'Wenn du sie nützlich findest, kannst du ihre Entwicklung auch mit einer optionalen <a href="https://ko-fi.com/vinny1" target="_blank" rel="noopener"><i class="icon fa fa-heart fa-fw" aria-hidden="true"></i>Spende</a> unterstützen.',
@@ -56,7 +55,6 @@ $lang = array_merge($lang, [
 	'ACP_VINNY_SIDEBAR_BLOCK_EDIT'	=> 'Block bearbeiten',
 	'BLOCK_NAME'					=> 'Block-Name',
 	'PARSE_BBCODE'					=> 'BBCode parsen',
-	'PARSE_BBCODE_EXPLAIN'			=> 'Wenn aktiviert, werden BBCode-Formatierungen, Smilies und URLs für diesen Block verarbeitet. Wenn deaktiviert, wird vertrauenswürdiger HTML-Code direkt gerendert.',
 	'BLOCK_SIDE'					=> 'Sidebar-Seite',
 	'BLOCK_SIDE_LEFT'				=> 'Linke Sidebar',
 	'BLOCK_SIDE_RIGHT'				=> 'Rechte Sidebar',

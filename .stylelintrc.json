@@ -4,6 +4,7 @@
     "selector-id-pattern": null,
     "selector-class-pattern": null,
     "declaration-block-single-line-max-declarations": null,
+    "media-feature-range-notation": "prefix",
     "no-empty-source": true
   }
 }

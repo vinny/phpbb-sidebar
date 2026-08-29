@@ -23,7 +23,6 @@ $lang = array_merge($lang, [
 	'ACP_VINNY_SIDEBAR_SETTINGS'	=> 'Configurações',
 	'ACP_VINNY_SIDEBAR_BLOCKS'		=> 'Gerir Blocos',
 
-	'VINNY_SIDEBAR'					=> 'Sidebar Manager',
 	'VINNY_SIDEBAR_EXPLAIN'			=> 'Aqui pode gerir as barras laterais e os seus blocos. Note que os blocos do sistema não podem ser eliminados, pois o seu conteúdo é gerado dinamicamente por código.',
 	'VINNY_SIDEBAR_SUPPORT_STAR'	=> 'Se gosta desta extensão, por favor dê uma estrela no <a href="https://github.com/vinny/phpbb-sidebar" target="_blank" rel="noopener"><i class="icon fa fa-github fa-fw" aria-hidden="true"></i>GitHub</a>.',
 	'VINNY_SIDEBAR_SUPPORT_DONATE'	=> 'Se a considera útil, também pode apoiar o seu desenvolvimento com uma <a href="https://ko-fi.com/vinny1" target="_blank" rel="noopener"><i class="icon fa fa-heart fa-fw" aria-hidden="true"></i>doação</a> opcional.',
@@ -55,7 +54,6 @@ $lang = array_merge($lang, [
 	'ACP_VINNY_SIDEBAR_BLOCK_EDIT'	=> 'Editar Bloco',
 	'BLOCK_NAME'					=> 'Nome do Bloco',
 	'PARSE_BBCODE'					=> 'Processar BBCode',
-	'PARSE_BBCODE_EXPLAIN'			=> 'Se activado, a formatação BBCode, smileys e URLs serão processados para este bloco. Se desactivado, o código HTML bruto confiável é renderizado directamente.',
 	'BLOCK_SIDE'					=> 'Lado da Barra Lateral',
 	'BLOCK_SIDE_LEFT'				=> 'Barra Lateral Esquerda',
 	'BLOCK_SIDE_RIGHT'				=> 'Barra Lateral Direita',

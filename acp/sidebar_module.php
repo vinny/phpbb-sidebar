@@ -418,7 +418,7 @@ class sidebar_module
 					trigger_error($language->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
 				}
 
-				$sql = 'SELECT sidebar_side, block_is_system FROM ' . $blocks_table . ' WHERE block_id = ' . (int) $block_id;
+				$sql = 'SELECT sidebar_side FROM ' . $blocks_table . ' WHERE block_id = ' . (int) $block_id;
 				$result = $db->sql_query($sql);
 				$row = $db->sql_fetchrow($result);
 				$db->sql_freeresult($result);
@@ -594,6 +594,7 @@ class sidebar_module
 
 				$template->assign_vars([
 					'U_ACTION' 				=> $this->u_action,
+					'U_ADD_BLOCK'			=> $this->u_action . '&amp;action=add',
 					'U_UPDATE_ORDER'		=> $this->u_action . '&amp;action=update_order',
 					'UPDATE_ORDER_HASH'		=> generate_link_hash('update_order'),
 					'U_PURGE_CACHE'			=> $this->u_action . '&amp;action=purge_cache&amp;hash=' . generate_link_hash('purge_cache'),

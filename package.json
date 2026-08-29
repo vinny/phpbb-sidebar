@@ -5,8 +5,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "lint:js": "eslint \"adm/style/js/**/*.js\" \"adm/style/*.html\" \"styles/all/template/**/*.html\"",
-    "lint:js:fix": "eslint \"adm/style/js/**/*.js\" \"adm/style/*.html\" \"styles/all/template/**/*.html\" --fix",
+    "lint:js": "eslint \"adm/style/js/**/*.js\" \"adm/style/*.html\" \"styles/all/template/**/*.html\" \"styles/all/template/js/**/*.js\"",
+    "lint:js:fix": "eslint \"adm/style/js/**/*.js\" \"adm/style/*.html\" \"styles/all/template/**/*.html\" \"styles/all/template/js/**/*.js\" --fix",
     "lint:css": "stylelint \"adm/style/css/*.css\" \"styles/all/theme/*.css\" \"styles/proflat/theme/*.css\" \"styles/prosilver_se/theme/*.css\" \"styles/SE_Gamer/theme/*.css\"",
     "lint:css:fix": "stylelint \"adm/style/css/*.css\" \"styles/all/theme/*.css\" \"styles/proflat/theme/*.css\" \"styles/prosilver_se/theme/*.css\" \"styles/SE_Gamer/theme/*.css\" --fix",
     "lint": "npm run lint:js && npm run lint:css",
